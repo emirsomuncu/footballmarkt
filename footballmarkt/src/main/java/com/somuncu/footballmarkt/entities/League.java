@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table
@@ -39,4 +38,18 @@ public class League {
         return totalClubValue;
     }
 
+    public League(Long id, String name, Double leagueValue) {
+        this.id = id;
+        this.name = name;
+        this.leagueValue = leagueValue;
+    }
+
+    @Override
+    public String toString() {
+        return "League{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", leagueValue=" + leagueValue +
+                '}';
+    }
 }

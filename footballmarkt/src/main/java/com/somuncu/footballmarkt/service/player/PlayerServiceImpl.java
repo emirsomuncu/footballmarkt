@@ -1,5 +1,6 @@
 package com.somuncu.footballmarkt.service.player;
 
+import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;;
 import com.somuncu.footballmarkt.dao.ClubRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -136,6 +138,31 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     @Transactional
+    public void transferPlayer(Long playerId, Long newClubId) {
+
+        Player playerToTransfer = this.playerRepository.findById(playerId).orElseThrow(()-> new NoPlayerFoundException("There is no player to transfer"));
+
+        // adjusting old club and league situations
+        Club oldClub = playerToTransfer.getClub();
+        oldClub.getPlayers().remove(playerToTransfer);
+        oldClub.updateClubValue();
+        League oldLeague = oldClub.getLeague();
+        oldLeague.getClubs().add(oldClub);
+        oldLeague.updateLeagueValue();
+
+        //adjusting new club and league situations
+        Club newClub = clubRepository.findById(newClubId).orElseThrow(()-> new NoClubFoundException("No club found to transfer player"));
+        playerToTransfer.setClub(newClub);
+        newClub.getPlayers().add(playerToTransfer);
+        Double newValue = newClub.updateClubValue();
+        League newLeague = newClub.getLeague();
+        Club newClubInClubList = newLeague.getClubs().stream().filter(club -> club.getId().equals(newClub.getId())).findFirst().orElseThrow(()-> new RuntimeException("Unexpected error"));
+        newClubInClubList.setClubValue(newValue);
+        newLeague.updateLeagueValue();
+    }
+
+    @Override
+    @Transactional
     public void deletePlayer(Long playerId) {
 
 
@@ -152,6 +179,7 @@ public class PlayerServiceImpl implements PlayerService{
         league.updateLeagueValue();
         leagueRepository.save(league);
     }
+
 
     public PlayerDto convertPlayerToPlayerDto(Player player) {
 

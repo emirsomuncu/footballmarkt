@@ -19,6 +19,7 @@ public interface PlayerService {
     public List<Player> listAllPlayersOfClubAccordingToDescendingMarketValue(String clubName);
     public void addPlayer(AddPlayerRequest addPlayerRequest);
     public void updatePlayer(UpdatePlayerRequest updatePlayerRequest);
+    public void transferPlayer(Long playerId , Long newClubId);
     public void deletePlayer(Long playerId);
     public PlayerDto convertPlayerToPlayerDto(Player player);
     public List<PlayerDto> convertPlayerListToPlayerDtoList(List<Player> playerList);

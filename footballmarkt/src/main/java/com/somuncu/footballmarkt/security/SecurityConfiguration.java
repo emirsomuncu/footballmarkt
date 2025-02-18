@@ -31,7 +31,7 @@ public class SecurityConfiguration  {
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/api/v1/auth/**" ).permitAll()
                                 .requestMatchers(
-                                        "/api/v1/players/create" ,"/api/v1/players/update" , "/api/v1/players/delete",
+                                        "/api/v1/players/create" ,"/api/v1/players/update" , "/api/v1/players/delete", "/api/v1/players/transfer",
                                         "/api/v1/stats/add", "/api/v1/stats/update" , "/api/v1/stats/delete/{id}",
                                         "/api/v1/images/save" , "/api/v1/images/image/{imageId}/update", "/api/v1/images/image/{imageId}/delete",
                                         "/api/v1/clubs/add" , "/api/v1/clubs/update" , "/api/v1/clubs/delete",

@@ -38,7 +38,7 @@ public class Club {
         this.clubValue = clubValue;
     }
 
-    public void updateClubValue() {
+    public Double updateClubValue() {
 
        List<Double> playersValuesList = players.stream().map(player -> {
            Double playerMarketValue = player.getMarketValue();
@@ -51,7 +51,16 @@ public class Club {
        }
 
        this.clubValue = totalValue;
+       return totalValue;
     }
 
-
+    @Override
+    public String toString() {
+        return "Club{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", foundationYear=" + foundationYear +
+                ", clubValue=" + clubValue +
+                '}';
+    }
 }

@@ -100,6 +100,13 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Player updated" , null));
     }
 
+    @PostMapping("/transfer")
+    public ResponseEntity<ApiResponse> transferPlayer(@RequestParam Long playerId, @RequestParam Long newClubId) {
+
+        this.playerService.transferPlayer(playerId,newClubId);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Player transferred the new club" , null));
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deletePlayer(@RequestParam Long playerId) {
 

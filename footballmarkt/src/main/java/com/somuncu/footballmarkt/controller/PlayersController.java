@@ -1,12 +1,11 @@
 package com.somuncu.footballmarkt.controller;
 
 import com.somuncu.footballmarkt.entities.Player;
-import com.somuncu.footballmarkt.request.dtos.player.PlayerDto;
+import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.service.player.PlayerService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

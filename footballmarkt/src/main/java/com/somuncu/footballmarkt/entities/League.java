@@ -24,6 +24,13 @@ public class League {
     @OneToMany(mappedBy = "league" , cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Club> clubs;
 
+    @OneToMany
+    private List<Image> images;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "league")
+    private List<Trophy> trophies;
+
 
     public Double updateLeagueValue() {
 

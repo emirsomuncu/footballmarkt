@@ -15,7 +15,7 @@ public class Stats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
-    private Long season;
+    private String season;
     private Long goal;
     private Long assist;
     private Long playedMatch;
@@ -30,7 +30,7 @@ public class Stats {
     @ManyToOne
     private Club club;
 
-    public Stats(Long id, Long season, Long goal, Long assist, Long playedMatch, Long firstEleven, Long playedMinutes, Long yellowCard, Long redCard) {
+    public Stats(Long id, String season, Long goal, Long assist, Long playedMatch, Long firstEleven, Long playedMinutes, Long yellowCard, Long redCard) {
         this.id = id;
         this.season = season;
         this.goal = goal;

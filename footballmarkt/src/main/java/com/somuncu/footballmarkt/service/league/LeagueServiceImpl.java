@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.service.league;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
 import com.somuncu.footballmarkt.dao.LeagueRepository;
 import com.somuncu.footballmarkt.entities.League;
-import com.somuncu.footballmarkt.request.dtos.league.LeagueDto;
+import com.somuncu.footballmarkt.response.dtos.league.LeagueDto;
 import com.somuncu.footballmarkt.request.league.CreateLeagueRequest;
 import com.somuncu.footballmarkt.request.league.UpdateLeagueRequest;
 import com.somuncu.footballmarkt.service.rules.LeagueServiceImplRules;

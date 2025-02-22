@@ -9,6 +9,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundE
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserAlreadyExistsException;
 import com.somuncu.footballmarkt.response.HandlerResponse;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoLeaguesFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoLeaguesFoundException(NoLeaguesFoundException noLeaguesFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noLeaguesFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(NoTrophyFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoTrophyFoundException(NoTrophyFoundException noTrophyFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTrophyFoundException.getMessage()));
     }
 }

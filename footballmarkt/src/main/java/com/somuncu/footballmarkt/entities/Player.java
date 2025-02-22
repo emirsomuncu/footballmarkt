@@ -33,12 +33,14 @@ public class Player {
     @ManyToOne
     private Club club;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "player")
-    private List<Image> images ;
+    private List<Image> images;
 
     @OneToOne
     private ClubHistory clubHistory;
+
+    @ManyToMany
+    private List<Trophy> trophies;
 
     public Player(Long id, String firstName, String lastName, String nation, int age, String foot, Double marketValue) {
         this.id = id;

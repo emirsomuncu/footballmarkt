@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.request.dtos.clubhistory;
+package com.somuncu.footballmarkt.response.dtos.clubhistory;
 
 import jakarta.persistence.Access;
 import lombok.AllArgsConstructor;

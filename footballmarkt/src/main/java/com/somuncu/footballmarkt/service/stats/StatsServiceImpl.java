@@ -4,7 +4,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundExc
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
 import com.somuncu.footballmarkt.dao.StatsRepository;
 import com.somuncu.footballmarkt.entities.Stats;
-import com.somuncu.footballmarkt.request.dtos.stats.StatsDto;
+import com.somuncu.footballmarkt.response.dtos.stats.StatsDto;
 import com.somuncu.footballmarkt.request.stats.CreateStatsRequest;
 import com.somuncu.footballmarkt.request.stats.UpdateStatsRequest;
 import com.somuncu.footballmarkt.service.rules.StatsServiceImplRules;
@@ -32,7 +32,7 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public Stats getStatsByPlayerNameAndSeason(String playerFirstName,String playerLastName, Long season) {
+    public Stats getStatsByPlayerNameAndSeason(String playerFirstName,String playerLastName, String season) {
 
         Stats stats = this.statsRepository.findStatsByPlayerFirstNameAndPlayerLastNameAndSeason(playerFirstName,playerLastName,season);
         if(stats.getId() == null) {

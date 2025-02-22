@@ -9,7 +9,7 @@ import com.somuncu.footballmarkt.dao.PlayerRepository;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.entities.League;
 import com.somuncu.footballmarkt.entities.Player;
-import com.somuncu.footballmarkt.request.dtos.player.PlayerDto;
+import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.service.rules.PlayerServiceImplRules;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 

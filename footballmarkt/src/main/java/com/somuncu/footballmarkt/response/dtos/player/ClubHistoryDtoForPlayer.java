@@ -1,6 +1,5 @@
-package com.somuncu.footballmarkt.request.dtos.player;
+package com.somuncu.footballmarkt.response.dtos.player;
 
-import com.somuncu.footballmarkt.request.dtos.player.ClubDtoForPlayer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

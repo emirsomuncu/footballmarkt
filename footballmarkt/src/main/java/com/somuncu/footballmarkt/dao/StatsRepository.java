@@ -9,6 +9,6 @@ import java.util.List;
 public interface StatsRepository extends JpaRepository<Stats , Long> {
 
     public List<Stats> findStatsByPlayerFirstNameAndPlayerLastName(String firstName , String lastName);
-    public Stats findStatsByPlayerFirstNameAndPlayerLastNameAndSeason(String firstName , String lastName , Long season);
-    public Boolean existsBySeasonAndPlayer(Long season , Player player);
+    public Stats findStatsByPlayerFirstNameAndPlayerLastNameAndSeason(String firstName , String lastName , String season);
+    public Boolean existsBySeasonAndPlayer(String season , Player player);
 }

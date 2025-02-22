@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.controller;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
-import com.somuncu.footballmarkt.request.dtos.club.ClubDto;
+import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.service.club.ClubService;
 import lombok.RequiredArgsConstructor;

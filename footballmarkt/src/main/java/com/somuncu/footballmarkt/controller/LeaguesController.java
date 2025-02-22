@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.controller;
 
 import com.somuncu.footballmarkt.entities.League;
-import com.somuncu.footballmarkt.request.dtos.league.LeagueDto;
+import com.somuncu.footballmarkt.response.dtos.league.LeagueDto;
 import com.somuncu.footballmarkt.request.league.CreateLeagueRequest;
 import com.somuncu.footballmarkt.request.league.UpdateLeagueRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;

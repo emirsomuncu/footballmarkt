@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.request.dtos.stats;
+package com.somuncu.footballmarkt.response.dtos.stats;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

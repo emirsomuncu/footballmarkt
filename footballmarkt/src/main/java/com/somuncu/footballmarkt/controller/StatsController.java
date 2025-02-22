@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.controller;
 
 import com.somuncu.footballmarkt.entities.Stats;
-import com.somuncu.footballmarkt.request.dtos.stats.StatsDto;
+import com.somuncu.footballmarkt.response.dtos.stats.StatsDto;
 import com.somuncu.footballmarkt.request.stats.CreateStatsRequest;
 import com.somuncu.footballmarkt.request.stats.UpdateStatsRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;
@@ -30,7 +30,7 @@ public class StatsController {
 
 
     @GetMapping("/player-season-stats")
-    public ResponseEntity<ApiResponse> getStatsByPlayerNameAndSeason(@RequestParam String playerFirstName , @RequestParam String playerLastName, @RequestParam Long season) {
+    public ResponseEntity<ApiResponse> getStatsByPlayerNameAndSeason(@RequestParam String playerFirstName , @RequestParam String playerLastName, @RequestParam String season) {
         Stats stats = this.statsService.getStatsByPlayerNameAndSeason(playerFirstName,playerLastName,season);
         StatsDto statsDto = this.statsService.convertStatsToStatsDto(stats);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , statsDto));

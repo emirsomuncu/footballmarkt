@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.request.dtos.league;
+package com.somuncu.footballmarkt.response.dtos.league;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.service.player;
 
 import com.somuncu.footballmarkt.entities.Player;
-import com.somuncu.footballmarkt.request.dtos.player.PlayerDto;
+import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 

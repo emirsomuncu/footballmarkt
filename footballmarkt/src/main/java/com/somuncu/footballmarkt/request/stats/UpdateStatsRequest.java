@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class UpdateStatsRequest {
 
     private Long id ;
-    private Long season;
+    private String season;
     private Long goal;
     private Long assist;
     private Long playedMatch;

@@ -1,6 +1,5 @@
-package com.somuncu.footballmarkt.request.dtos.stats;
+package com.somuncu.footballmarkt.response.dtos.stats;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StatsDto {
 
-    private Long season;
+    private String season;
     private Long goal;
     private Long assist;
     private Long playedMatch;

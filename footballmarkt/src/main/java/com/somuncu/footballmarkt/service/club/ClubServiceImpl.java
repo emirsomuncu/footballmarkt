@@ -4,10 +4,9 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundExcep
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
 import com.somuncu.footballmarkt.dao.ClubRepository;
 import com.somuncu.footballmarkt.entities.Club;
-import com.somuncu.footballmarkt.entities.League;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
-import com.somuncu.footballmarkt.request.dtos.club.ClubDto;
+import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
 import com.somuncu.footballmarkt.service.rules.ClubServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

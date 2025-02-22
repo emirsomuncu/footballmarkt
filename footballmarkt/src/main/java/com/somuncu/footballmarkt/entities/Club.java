@@ -28,8 +28,14 @@ public class Club {
     @OneToMany(mappedBy = "club" , cascade = CascadeType.ALL )
     private List<Player> players = new ArrayList<>();
 
+    @OneToMany(mappedBy = "club")
+    private List<Image> images;
+
     @ManyToOne
     private League league ;
+
+    @OneToMany(mappedBy = "club")
+    private List<Trophy> trophies;
 
     public Club(Long id, String name, int foundationYear, Double clubValue) {
         this.id = id;

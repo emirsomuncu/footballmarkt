@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.service.clubhistory;
 
 import com.somuncu.footballmarkt.entities.ClubHistory;
-import com.somuncu.footballmarkt.request.dtos.clubhistory.ClubHistoryDto;
+import com.somuncu.footballmarkt.response.dtos.clubhistory.ClubHistoryDto;
 
 import java.util.List;
 

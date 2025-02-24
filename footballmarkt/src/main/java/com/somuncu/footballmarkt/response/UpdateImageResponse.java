@@ -11,6 +11,4 @@ public class UpdateImageResponse {
 
     private String fileName;
     private String downloadUrl;
-    private String playerFirstName;
-    private String playerLastName;
 }

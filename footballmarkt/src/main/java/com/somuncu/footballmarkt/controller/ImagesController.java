@@ -28,8 +28,12 @@ public class ImagesController {
     private final ImageService imageService;
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse> saveImage(@RequestParam List<MultipartFile> files , @RequestParam Long playerId) {
-        List<SaveImageResponse> saveImageResponses = this.imageService.saveImage(files , playerId);
+    public ResponseEntity<ApiResponse> saveImage(@RequestParam List<MultipartFile> files ,
+                                                 @RequestParam(required = false) Long playerId ,
+                                                 @RequestParam(required = false) Long clubId ,
+                                                 @RequestParam(required = false) Long trophyId ,
+                                                 @RequestParam(required = false) Long leagueId) {
+        List<SaveImageResponse> saveImageResponses = this.imageService.saveImage(files , playerId , clubId , trophyId , leagueId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Images successfully saved" , saveImageResponses));
     }
 
@@ -46,9 +50,13 @@ public class ImagesController {
     }
 
     @PutMapping("/image/{imageId}/update")
-    public ResponseEntity<ApiResponse> updateImage(@RequestParam MultipartFile file ,@PathVariable Long imageId ,@RequestParam Long playerId) {
+    public ResponseEntity<ApiResponse> updateImage(@RequestParam MultipartFile file ,@PathVariable Long imageId ,
+                                                   @RequestParam(required = false) Long playerId ,
+                                                   @RequestParam(required = false) Long clubId ,
+                                                   @RequestParam(required = false) Long trophyId ,
+                                                   @RequestParam(required = false) Long leagueId) {
         try{
-            UpdateImageResponse updateImageResponse = this.imageService.updateImage(file,imageId,playerId);
+            UpdateImageResponse updateImageResponse = this.imageService.updateImage(file,imageId,playerId , clubId , trophyId , leagueId);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Updated successfully" , updateImageResponse));
         }catch(Exception exception){
             throw new RuntimeException(exception.getMessage());

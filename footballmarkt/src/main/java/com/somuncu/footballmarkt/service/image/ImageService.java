@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ImageService {
 
-    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId);
+    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId , Long leagueId , Long trophyId);
     public Image getImageById(Long imageId);
-    public UpdateImageResponse updateImage(MultipartFile file , Long imageId , Long playerId) throws IOException, SQLException;
+    public UpdateImageResponse updateImage(MultipartFile file , Long imageId , Long playerId , Long clubId , Long leagueId , Long trophyId) throws IOException, SQLException;
     public void deleteImage(Long imageId);
 
 }

@@ -4,6 +4,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.club.ClubAlreadyExist
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.clubhistory.NoClubHistoryFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.images.WrongSaveImageRequestException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.league.NoLeaguesFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyExistsException;
@@ -73,5 +74,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoTrophyFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoTrophyFoundException(NoTrophyFoundException noTrophyFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTrophyFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(WrongSaveImageRequestException.class)
+    public ResponseEntity<HandlerResponse> handleWrongSaveImageRequestException(WrongSaveImageRequestException wrongSaveImageRequestException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(wrongSaveImageRequestException.getMessage()));
     }
 }

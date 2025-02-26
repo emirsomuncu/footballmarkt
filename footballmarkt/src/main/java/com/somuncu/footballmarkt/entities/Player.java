@@ -33,13 +33,13 @@ public class Player {
     @ManyToOne
     private Club club;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player" , cascade = CascadeType.ALL)
     private List<Image> images;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ClubHistory clubHistory;
 
-    @ManyToMany
+    @ManyToMany( cascade = {CascadeType.PERSIST ,CascadeType.MERGE })
     private List<Trophy> trophies;
 
     public Player(Long id, String firstName, String lastName, String nation, int age, String foot, Double marketValue) {

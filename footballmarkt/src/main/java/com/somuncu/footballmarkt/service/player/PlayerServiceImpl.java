@@ -2,21 +2,26 @@ package com.somuncu.footballmarkt.service.player;
 
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;;
 import com.somuncu.footballmarkt.dao.ClubRepository;
 import com.somuncu.footballmarkt.dao.LeagueRepository;
 import com.somuncu.footballmarkt.dao.PlayerRepository;
+import com.somuncu.footballmarkt.dao.TrophyRepository;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.entities.League;
 import com.somuncu.footballmarkt.entities.Player;
+import com.somuncu.footballmarkt.entities.Trophy;
 import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.service.rules.PlayerServiceImplRules;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +33,7 @@ public class PlayerServiceImpl implements PlayerService{
     private PlayerRepository playerRepository;
     private ClubRepository clubRepository;
     private LeagueRepository leagueRepository;
+    private TrophyRepository trophyRepository;
     private PlayerServiceImplRules playerServiceImplRules;
     private ModelMapperService modelMapperService ;
 
@@ -98,6 +104,19 @@ public class PlayerServiceImpl implements PlayerService{
     public void addPlayer(AddPlayerRequest addPlayerRequest) {
 
         Player player = this.modelMapperService.forRequest().map(addPlayerRequest , Player.class);
+        if(addPlayerRequest.getTrophyIds() != null) {
+            List<Trophy> trophyList = new ArrayList<>();
+            List<Long> trophyIds = addPlayerRequest.getTrophyIds();
+            for(Long id : trophyIds) {
+                Trophy trophy = this.trophyRepository.findById(id).orElseThrow(()-> new NoTrophyFoundException("No trophy found to add player"));
+                trophyList.add(trophy);
+            }
+            player.setTrophies(trophyList);
+        }
+        else{
+            List<Trophy> emptyTrophyList = new ArrayList<>();
+            player.setTrophies(emptyTrophyList);
+        }
         this.playerServiceImplRules.checkIfPlayerExists(player.getFirstName(), player.getLastName(), player.getAge(), player.getMarketValue());
 
         // to ensure that when a player added ,updated club value is exists
@@ -118,10 +137,26 @@ public class PlayerServiceImpl implements PlayerService{
     @Transactional
     public void updatePlayer(UpdatePlayerRequest updatePlayerRequest) {
 
-        Long id = updatePlayerRequest.getClubId();
-        Club club= this.clubRepository.findById(id).get();
-
         Player player = this.modelMapperService.forRequest().map(updatePlayerRequest , Player.class);
+        Long id = updatePlayerRequest.getClubId();
+        if(updatePlayerRequest.getTrophyIds() != null) {
+            Long idToUpdatePlayer = updatePlayerRequest.getId();
+            Player playerToUpdate = playerRepository.findById(idToUpdatePlayer).get();
+            playerToUpdate.getTrophies().clear();
+            List<Trophy> trophyList = new ArrayList<>();
+            List<Long> trophyIds = updatePlayerRequest.getTrophyIds();
+            for(Long aLong : trophyIds) {
+                Trophy trophy = this.trophyRepository.findById(aLong).orElseThrow(()-> new NoTrophyFoundException("No trophy found to add player"));
+                trophyList.add(trophy);
+            }
+            player.setTrophies(trophyList);
+        }
+        else{
+            List<Trophy> emptyTrophyList = new ArrayList<>();
+            player.setTrophies(emptyTrophyList);
+        }
+
+        Club club= this.clubRepository.findById(id).get();
         Long playerId = updatePlayerRequest.getId();
         Player playerToUpdate = club.getPlayers().stream().filter(clubPlayers-> clubPlayers.getId().equals(playerId)).findFirst().orElseThrow(()-> new NoPlayerFoundException("No player found to update"));
         modelMapperService.forResponse().map(player , playerToUpdate);

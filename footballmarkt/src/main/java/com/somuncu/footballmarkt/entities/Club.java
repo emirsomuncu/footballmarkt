@@ -25,17 +25,17 @@ public class Club {
     private Double clubValue;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "club" , cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "club" , cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Player> players = new ArrayList<>();
 
-    @OneToMany(mappedBy = "club")
-    private List<Image> images;
+    @OneToMany(mappedBy = "club" , cascade =CascadeType.ALL , orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
     @ManyToOne
     private League league ;
 
-    @OneToMany(mappedBy = "club")
-    private List<Trophy> trophies;
+    @OneToMany(mappedBy = "club" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Trophy> trophies = new ArrayList<>();
 
     public Club(Long id, String name, int foundationYear, Double clubValue) {
         this.id = id;

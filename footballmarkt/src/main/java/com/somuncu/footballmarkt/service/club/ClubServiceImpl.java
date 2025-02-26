@@ -10,6 +10,7 @@ import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
 import com.somuncu.footballmarkt.service.rules.ClubServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,6 +69,7 @@ public class ClubServiceImpl implements ClubService{
         this.clubRepository.save(club);
     }
 
+    @Transactional
     @Override
     public void deleteClub(Long clubId) {
 

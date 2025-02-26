@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,5 @@ public class UpdatePlayerRequest {
     private Double marketValue;
     private Long clubId;
     private Long clubHistoryId;
+    private List<Long> trophyIds;
 }

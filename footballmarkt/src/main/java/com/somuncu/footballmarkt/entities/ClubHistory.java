@@ -18,7 +18,7 @@ public class ClubHistory {
     private Long id;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "clubHistory" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToOne(mappedBy = "clubHistory")
     private Player player;
 
     @JsonIgnore

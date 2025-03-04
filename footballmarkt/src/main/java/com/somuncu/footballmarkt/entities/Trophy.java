@@ -20,7 +20,7 @@ public class Trophy {
 
     private String season;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trophy" , cascade = CascadeType.ALL ,orphanRemoval = true)
     private List<Image> images;
 
     @ManyToOne

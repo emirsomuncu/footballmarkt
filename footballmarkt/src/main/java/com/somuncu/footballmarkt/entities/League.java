@@ -21,14 +21,14 @@ public class League {
     private Double leagueValue;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "league" , cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "league" , cascade = {CascadeType.PERSIST, CascadeType.REFRESH ,CascadeType.REMOVE}, orphanRemoval = true)
     private List<Club> clubs;
 
-    @OneToMany
+    @OneToMany(mappedBy = "league" , cascade = CascadeType.ALL)
     private List<Image> images;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "league")
+    @OneToMany(mappedBy = "league" , cascade = CascadeType.ALL)
     private List<Trophy> trophies;
 
 

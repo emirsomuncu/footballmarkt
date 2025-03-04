@@ -2,8 +2,12 @@ package com.somuncu.footballmarkt.service.club;
 
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
+import com.somuncu.footballmarkt.dao.ClubHistoryRepository;
 import com.somuncu.footballmarkt.dao.ClubRepository;
+import com.somuncu.footballmarkt.dao.PlayerRepository;
 import com.somuncu.footballmarkt.entities.Club;
+import com.somuncu.footballmarkt.entities.ClubHistory;
+import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
 import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
@@ -20,6 +24,8 @@ import java.util.stream.Collectors;
 public class ClubServiceImpl implements ClubService{
 
     private final ClubRepository clubRepository;
+    private final PlayerRepository playerRepository;
+    private final ClubHistoryRepository clubHistoryRepository;
     private final ClubServiceImplRules clubServiceImplRules;
     private final ModelMapperService modelMapperService;
 
@@ -74,6 +80,19 @@ public class ClubServiceImpl implements ClubService{
     public void deleteClub(Long clubId) {
 
         Club club = this.clubRepository.findById(clubId).orElseThrow(()-> new NoClubFoundException("No club found to delete "));
+
+        List<Player> players = this.playerRepository.findAll();
+
+        for(Player player : players) {
+
+            ClubHistory clubHistory = player.getClubHistory();
+            List<Club> playerClubList = clubHistory.getClubs();
+            if(playerClubList.contains(club)) {
+                playerClubList.remove(club);
+                clubHistory.setClubs(playerClubList);
+                clubHistoryRepository.save(clubHistory);
+            }
+        }
         this.clubRepository.delete(club);
     }
 

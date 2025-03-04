@@ -11,6 +11,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyE
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.TrophyAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserAlreadyExistsException;
 import com.somuncu.footballmarkt.response.HandlerResponse;
 import org.springframework.http.HttpStatus;
@@ -74,6 +75,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoTrophyFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoTrophyFoundException(NoTrophyFoundException noTrophyFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTrophyFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(TrophyAlreadyExistsException.class)
+    public ResponseEntity<HandlerResponse> handleTrophyAlreadyExistsException(TrophyAlreadyExistsException trophyAlreadyExistsException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(trophyAlreadyExistsException.getMessage()));
     }
 
     @ExceptionHandler(WrongSaveImageRequestException.class)

@@ -35,9 +35,9 @@ public class ImageServiceImpl implements ImageService{
     private final ImageServiceImplRules imageServiceImplRules;
 
     @Override
-    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId , Long leagueId , Long trophyId) {
+    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId ) {
 
-        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , leagueId , trophyId);
+        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , trophyId , leagueId );
 
         List<SaveImageResponse> saveImageResponses = files.stream().map(file -> {
 

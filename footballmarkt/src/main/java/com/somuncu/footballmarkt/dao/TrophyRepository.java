@@ -13,5 +13,6 @@ public interface TrophyRepository extends JpaRepository<Trophy,Long> {
     public Trophy findTrophyBySeasonAndLeagueName(String season , String leagueName);
     public List<Trophy> findAllByLeagueName(String leagueName);
     public List<Trophy> findAllByClubName(String clubName);
+    public Boolean existsBySeasonAndName(String season , String name);
 
 }

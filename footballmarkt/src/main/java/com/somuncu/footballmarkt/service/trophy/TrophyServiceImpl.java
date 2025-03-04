@@ -69,6 +69,7 @@ public class TrophyServiceImpl implements TrophyService {
     @Override
     public void createTrophy(CreateTrophyRequest createTrophyRequest) {
 
+        this.trophyServiceImplRules.checkIfTrophyExists(createTrophyRequest);
         Trophy trophy = this.modelMapperService.forRequest().map(createTrophyRequest , Trophy.class);
         this.trophyRepository.save(trophy);
 

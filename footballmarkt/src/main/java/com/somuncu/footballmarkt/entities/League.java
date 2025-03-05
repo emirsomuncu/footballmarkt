@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class League {
 
     @JsonIgnore
     @OneToMany(mappedBy = "league" , cascade = {CascadeType.PERSIST, CascadeType.REFRESH ,CascadeType.REMOVE}, orphanRemoval = true)
-    private List<Club> clubs;
+    private List<Club> clubs = new ArrayList<>();
 
     @OneToMany(mappedBy = "league" , cascade = CascadeType.ALL)
     private List<Image> images;

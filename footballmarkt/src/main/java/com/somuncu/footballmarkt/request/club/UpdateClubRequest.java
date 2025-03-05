@@ -12,6 +12,5 @@ public class UpdateClubRequest {
     private Long id;
     private String name;
     private int foundationYear;
-    private Long leagueId;
 
 }

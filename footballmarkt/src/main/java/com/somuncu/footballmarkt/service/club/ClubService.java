@@ -14,6 +14,7 @@ public interface ClubService {
     public Club getClubByName(String clubName);
     public void createClub(CreateClubRequest createClubRequest);
     public void updateClub(UpdateClubRequest updateClubRequest);
+    public void changeClubLeague(Long clubId , Long newLeagueId);
     public void deleteClub(Long clubId);
     public ClubDto convertClubToClubDto(Club club);
     public List<ClubDto> convertClubListToClubDtoList(List<Club> clubList);

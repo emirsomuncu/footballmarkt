@@ -58,6 +58,13 @@ public class ClubsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Club updated" , null ));
     }
 
+    @PutMapping("/change-league")
+    public ResponseEntity<ApiResponse> changeClubLeague(@RequestParam Long clubId , @RequestParam Long newLeagueId) {
+
+        this.clubService.changeClubLeague(clubId,newLeagueId);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Club's league changed" , null));
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deleteClub(@RequestParam Long clubId) {
 

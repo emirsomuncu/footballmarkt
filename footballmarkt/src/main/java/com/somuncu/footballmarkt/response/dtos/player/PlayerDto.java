@@ -13,6 +13,7 @@ public class PlayerDto {
 
     private String firstName;
     private String lastName;
+    private String fullName;
     private String nation;
     private int age;
     private String position;
@@ -22,6 +23,5 @@ public class PlayerDto {
     private String clubName;
     private List<ImageDtoForPlayerDto> images;
     private ClubHistoryDtoForPlayer clubHistory;
-
 
 }

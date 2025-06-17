@@ -28,6 +28,27 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList ));
     }
 
+    @GetMapping("/player")
+    public ResponseEntity<ApiResponse> getPlayerById(@RequestParam Long playerId) {
+        Player player = this.playerService.getPlayerById(playerId);
+        PlayerDto playerDto = this.playerService.convertPlayerToPlayerDto(player);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully" , playerDto));
+    }
+
+    @GetMapping("/player/name/{fullName}")
+    public ResponseEntity<ApiResponse> getPlayerByFullName(@PathVariable String fullName) {
+        Player player = this.playerService.getPlayerByFullName(fullName);
+        PlayerDto playerDto = this.playerService.convertPlayerToPlayerDto(player);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully" , playerDto));
+    }
+
+    @GetMapping("/most-viewed")
+    public ResponseEntity<ApiResponse> getMostViewedPlayers(@RequestParam Long playerNumber) {
+        List<Player> playerList = this.playerService.getMostViewedPlayers(playerNumber);
+        List<PlayerDto> playerDtoList = this.playerService.convertPlayerListToPlayerDtoList(playerList);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtoList));
+    }
+
     @GetMapping("/nation/{nation}")
     public ResponseEntity<ApiResponse> listPlayersAccordingToNation(@PathVariable String nation) {
 
@@ -44,14 +65,6 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList));
     }
 
-    @GetMapping("/player")
-    public ResponseEntity<ApiResponse> listPlayersAccordingToFirstAndLastName(@RequestParam String firstName , @RequestParam String lastName) {
-
-        List<Player> playerList = playerService.listPlayersAccordingToFirstAndLastName(firstName, lastName);
-        List<PlayerDto> playerDtosList = playerService.convertPlayerListToPlayerDtoList(playerList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList));
-    }
-
     @GetMapping("/player/{position}")
     public ResponseEntity<ApiResponse> listPlayersAccordingToPosition(@PathVariable String position) {
 
@@ -60,8 +73,8 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtoList));
     }
 
-    @GetMapping()
-    public ResponseEntity<ApiResponse> listPlayersAccordingToClubAndPosition(@RequestParam String clubName , @RequestParam String position) {
+    @GetMapping("/club/{clubName}/{position}")
+    public ResponseEntity<ApiResponse> listPlayersAccordingToClubAndPosition(@PathVariable String clubName , @PathVariable String position) {
 
         List<Player> playerList = playerService.listPlayersAccordingToClubAndPosition(clubName , position);
         List<PlayerDto> playerDtosList = this.playerService.convertPlayerListToPlayerDtoList(playerList);

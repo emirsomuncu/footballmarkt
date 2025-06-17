@@ -10,9 +10,11 @@ import java.util.List;
 public interface PlayerService {
 
     public List<Player> listAllPlayers();
+    public Player getPlayerById(Long playerId);
+    public Player getPlayerByFullName(String fullName);
+    public List<Player> getMostViewedPlayers(Long playerNumber);
     public List<Player> listPlayersAccordingToNation(String nation);
     public List<Player> listPlayersAccordingToClub(String clubName);
-    public List<Player> listPlayersAccordingToFirstAndLastName(String firstName , String lastName);
     public List<Player> listPlayersAccordingToPosition(String position);
     public List<Player> listPlayersAccordingToClubAndPosition(String clubName , String position);
     public List<Player> listAllPlayersAccordingToDescendingMarketValue();

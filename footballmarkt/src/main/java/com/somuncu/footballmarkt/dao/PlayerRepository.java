@@ -11,9 +11,13 @@ import java.util.Optional;
 
 public interface PlayerRepository extends JpaRepository<Player , Long> {
 
+    public Player findPlayerByFullName(String fullName);
+
+    @Query(value = "SELECT * FROM player ORDER BY profile_view_count DESC LIMIT :playerNumber" , nativeQuery = true)
+    public List<Player> getMostViewedPlayer(Long playerNumber);
+
     public List<Player> findPlayerByClubName(String name);
     public List<Player> findPlayerByNation(String nation);
-    public List<Player> findPlayerByFirstNameAndLastName(String firstName , String lastName);
     public List<Player> findPlayerByPosition(String position);
     public List<Player> findPlayerByClubNameAndPosition(String clubName , String position);
     public List<Player> findAllByOrderByMarketValueDesc();

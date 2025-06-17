@@ -45,6 +45,34 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
+    public Player getPlayerById(Long playerId) {
+
+        Player player = this.playerRepository.findById(playerId).orElseThrow(()-> new NoPlayerFoundException("No player found"));
+        player.updateProfileViewCount();
+        this.playerRepository.save(player);
+        return player;
+    }
+
+    @Override
+    public Player getPlayerByFullName(String fullName) {
+
+        Player player = this.playerRepository.findPlayerByFullName(fullName);
+        if(player != null) {
+            player.updateProfileViewCount();
+            this.playerRepository.save(player);
+            return player;
+        }
+        else {
+            throw new NoPlayerFoundException("No player found with this name");
+        }
+    }
+
+    @Override
+    public List<Player> getMostViewedPlayers(Long playerNumber) {
+        return this.playerRepository.getMostViewedPlayer(playerNumber);
+    }
+
+    @Override
     public List<Player> listPlayersAccordingToNation(String nation) {
         List<Player> playerList = this.playerRepository.findPlayerByNation(nation);
         this.playerServiceImplRules.checkIfListEmpty(playerList);
@@ -55,14 +83,6 @@ public class PlayerServiceImpl implements PlayerService{
     public List<Player> listPlayersAccordingToClub(String clubName) {
 
         List<Player> playerList = this.playerRepository.findPlayerByClubName(clubName);
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
-    }
-
-    @Override
-    public List<Player> listPlayersAccordingToFirstAndLastName(String firstName, String lastName) {
-
-        List<Player> playerList = this.playerRepository.findPlayerByFirstNameAndLastName(firstName , lastName);
         this.playerServiceImplRules.checkIfListEmpty(playerList);
         return playerList;
     }
@@ -104,6 +124,8 @@ public class PlayerServiceImpl implements PlayerService{
     public void addPlayer(AddPlayerRequest addPlayerRequest) {
 
         Player player = this.modelMapperService.forRequest().map(addPlayerRequest , Player.class);
+        player.updateFullName();
+
         if(addPlayerRequest.getTrophyIds() != null) {
             List<Trophy> trophyList = new ArrayList<>();
             List<Long> trophyIds = addPlayerRequest.getTrophyIds();

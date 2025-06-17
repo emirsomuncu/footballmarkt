@@ -2,8 +2,6 @@ package com.somuncu.footballmarkt.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,11 +18,13 @@ public class Player {
     private Long id ;
     private String firstName;
     private String lastName;
+    private String fullName;
     private String nation;
     private int age;
     private String position;
     private String foot;
     private Double marketValue;
+    private Long profileViewCount = 0L;
 
     @JsonIgnore
     @OneToMany(mappedBy = "player" , cascade = CascadeType.ALL )
@@ -41,6 +41,24 @@ public class Player {
 
     @ManyToMany( cascade = {CascadeType.PERSIST ,CascadeType.MERGE })
     private List<Trophy> trophies;
+
+    public void updateProfileViewCount() {
+        profileViewCount ++ ;
+    }
+
+    public void updateFullName() {
+        String full = "";
+        if (firstName != null && !firstName.isEmpty()) {
+            full += firstName;
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            if (!full.isEmpty()) {
+                full += " ";
+            }
+            full += lastName;
+        }
+        this.fullName = full;
+    }
 
     public Player(Long id, String firstName, String lastName, String nation, int age, String foot, Double marketValue) {
         this.id = id;

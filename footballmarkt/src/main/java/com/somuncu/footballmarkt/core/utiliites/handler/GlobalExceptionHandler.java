@@ -1,5 +1,7 @@
 package com.somuncu.footballmarkt.core.utiliites.handler;
 
+import com.somuncu.footballmarkt.core.utiliites.exceptions.arenagame.InvalidPlayerIdException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.arenagame.NoArenaGameFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.ClubAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.clubhistory.NoClubHistoryFoundException;
@@ -85,5 +87,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(WrongSaveImageRequestException.class)
     public ResponseEntity<HandlerResponse> handleWrongSaveImageRequestException(WrongSaveImageRequestException wrongSaveImageRequestException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(wrongSaveImageRequestException.getMessage()));
+    }
+
+    @ExceptionHandler(NoArenaGameFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoArenaGameFoundException(NoArenaGameFoundException noArenaGameFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noArenaGameFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPlayerIdException.class)
+    public ResponseEntity<HandlerResponse> handleInvalidPlayerIdException(InvalidPlayerIdException invalidPlayerIdException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(invalidPlayerIdException.getMessage()));
     }
 }

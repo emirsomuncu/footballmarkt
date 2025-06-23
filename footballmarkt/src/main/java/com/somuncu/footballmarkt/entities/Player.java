@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,6 +26,8 @@ public class Player {
     private String foot;
     private Double marketValue;
     private Long profileViewCount = 0L;
+    private Long arenaPlayed = 0L;
+    private Long arenaWins = 0L;
 
     @JsonIgnore
     @OneToMany(mappedBy = "player" , cascade = CascadeType.ALL )
@@ -42,6 +45,15 @@ public class Player {
     @ManyToMany( cascade = {CascadeType.PERSIST ,CascadeType.MERGE })
     private List<Trophy> trophies;
 
+    @OneToMany(mappedBy = "player1", cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<ArenaGame> arenaGamesAsPlayer1 = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player2", cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<ArenaGame> arenaGamesAsPlayer2 = new ArrayList<>();
+
+    @OneToMany(mappedBy = "winnerPlayer" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<ArenaGame> arenaGamesAsWinnerPlayer = new ArrayList<>();
+
     public void updateProfileViewCount() {
         profileViewCount ++ ;
     }
@@ -58,6 +70,16 @@ public class Player {
             full += lastName;
         }
         this.fullName = full;
+    }
+
+    public void updateArenaPlayed() {
+        Long sizeOfPlayer1 = Long.valueOf(arenaGamesAsPlayer1.size());
+        Long sizeOfPlayer2 = Long.valueOf(arenaGamesAsPlayer2.size());
+        this.arenaPlayed = sizeOfPlayer1+sizeOfPlayer2;
+    }
+    public void updateArenaWins() {
+        Long size = Long.valueOf(arenaGamesAsWinnerPlayer.size());
+        this.arenaWins = size;
     }
 
     public Player(Long id, String firstName, String lastName, String nation, int age, String foot, Double marketValue) {

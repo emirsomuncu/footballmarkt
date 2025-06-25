@@ -1,12 +1,14 @@
 package com.somuncu.footballmarkt.controller;
 
 import com.somuncu.footballmarkt.entities.Player;
+import com.somuncu.footballmarkt.response.PageResponse;
 import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.service.player.PlayerService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,17 +45,16 @@ public class PlayersController {
     }
 
     @GetMapping("/most-viewed")
-    public ResponseEntity<ApiResponse> getMostViewedPlayers(@RequestParam Long playerNumber) {
-        List<Player> playerList = this.playerService.getMostViewedPlayers(playerNumber);
-        List<PlayerDto> playerDtoList = this.playerService.convertPlayerListToPlayerDtoList(playerList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtoList));
+    public ResponseEntity<ApiResponse> getMostViewedPlayers(@RequestParam(defaultValue = "0") int pagingOffset) {
+        PageResponse<PlayerDto> pageResponse = this.playerService.getMostViewedPlayers(pagingOffset);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , pageResponse));
     }
 
     @GetMapping("/nation/{nation}")
-    public ResponseEntity<ApiResponse> listPlayersAccordingToNation(@PathVariable String nation) {
+    public ResponseEntity<ApiResponse> listPlayersAccordingToNation(@PathVariable String nation ,
+                                                                    @RequestParam(defaultValue = "0") int pagingOffset) {
 
-        List<Player> playerList = playerService.listPlayersAccordingToNation(nation);
-        List<PlayerDto> playerDtosList = playerService.convertPlayerListToPlayerDtoList(playerList);
+        PageResponse<PlayerDto> playerDtosList = this.playerService.listPlayersAccordingToNation(nation , pagingOffset);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList));
     }
 
@@ -66,11 +67,12 @@ public class PlayersController {
     }
 
     @GetMapping("/player/{position}")
-    public ResponseEntity<ApiResponse> listPlayersAccordingToPosition(@PathVariable String position) {
+    public ResponseEntity<ApiResponse> listPlayersAccordingToPosition(@PathVariable String position ,
+                                                                      @RequestParam(defaultValue = "0") int pagingOffset) {
 
-        List<Player> playerList = playerService.listPlayersAccordingToPosition(position);
-        List<PlayerDto> playerDtoList = playerService.convertPlayerListToPlayerDtoList(playerList);
+        PageResponse<PlayerDto> playerDtoList = this.playerService.listPlayersAccordingToPosition(position,pagingOffset);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtoList));
+
     }
 
     @GetMapping("/club/{clubName}/{position}")
@@ -82,18 +84,17 @@ public class PlayersController {
     }
 
     @GetMapping("/descending")
-    public ResponseEntity<ApiResponse> listAllPlayersAccordingToDescendingMarketValue() {
+    public ResponseEntity<ApiResponse> listAllPlayersAccordingToDescendingMarketValue(@RequestParam(defaultValue = "0") int pagingOffset) {
 
-        List<Player> playerList = playerService.listAllPlayersAccordingToDescendingMarketValue();
-        List<PlayerDto> playerDtosList = this.playerService.convertPlayerListToPlayerDtoList(playerList);
+        PageResponse<PlayerDto> playerDtosList = this.playerService.listAllPlayersAccordingToDescendingMarketValue(pagingOffset);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList));
     }
 
     @GetMapping("/club/descending")
-    public ResponseEntity<ApiResponse> listAllPlayersOfClubAccordingToDescendingMarketValue(@RequestParam String clubName) {
+    public ResponseEntity<ApiResponse> listAllPlayersOfClubAccordingToDescendingMarketValue(@RequestParam String clubName ,
+                                                                                            @RequestParam(defaultValue = "0") int pagingOffset) {   // pagination olmalı
 
-        List<Player> playerList = playerService.listAllPlayersOfClubAccordingToDescendingMarketValue(clubName);
-        List<PlayerDto> playerDtosList = this.playerService.convertPlayerListToPlayerDtoList(playerList);
+        PageResponse<PlayerDto> playerDtosList = playerService.listAllPlayersOfClubAccordingToDescendingMarketValue(clubName , pagingOffset);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList));
     }
 

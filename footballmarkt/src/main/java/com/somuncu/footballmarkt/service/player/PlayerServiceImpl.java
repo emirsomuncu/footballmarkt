@@ -12,11 +12,17 @@ import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.entities.League;
 import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.entities.Trophy;
+import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
+import com.somuncu.footballmarkt.response.PageResponse;
 import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.service.rules.PlayerServiceImplRules;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,15 +74,52 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> getMostViewedPlayers(Long playerNumber) {
-        return this.playerRepository.getMostViewedPlayer(playerNumber);
+    public PageResponse<PlayerDto> getMostViewedPlayers(int pagingOffset ) {
+
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findAllByOrderByProfileViewCountDesc(pageable);
+
+        List<Player> players = playerList.getContent();
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
     }
 
     @Override
-    public List<Player> listPlayersAccordingToNation(String nation) {
-        List<Player> playerList = this.playerRepository.findPlayerByNation(nation);
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
+    public PageResponse<PlayerDto> listPlayersAccordingToNation(String nation , int pagingOffset) {
+
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findPlayerByNation(nation,pageable);
+
+        List<Player> players = playerList.getContent();
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+        this.playerServiceImplRules.checkIfListEmpty(players);
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
     }
 
     @Override
@@ -88,11 +131,29 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> listPlayersAccordingToPosition(String position) {
+    public PageResponse<PlayerDto> listPlayersAccordingToPosition(String position , int pagingOffset) {
 
-        List<Player> playerList = this.playerRepository.findPlayerByPosition(position);
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findPlayerByPosition(position , pageable);
+
+        List<Player> players = playerList.getContent();
+        this.playerServiceImplRules.checkIfListEmpty(players);
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
+
     }
 
     @Override
@@ -104,19 +165,54 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> listAllPlayersAccordingToDescendingMarketValue() {
+    public PageResponse<PlayerDto> listAllPlayersAccordingToDescendingMarketValue(int pagingOffset) {
 
-        List<Player> playerList = this.playerRepository.findAllByOrderByMarketValueDesc();
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findAllByOrderByMarketValueDesc(pageable);
+
+        List<Player> players = playerList.getContent();
+        this.playerServiceImplRules.checkIfListEmpty(players);
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
+
     }
 
     @Override
-    public List<Player> listAllPlayersOfClubAccordingToDescendingMarketValue(String clubName) {
+    public PageResponse<PlayerDto> listAllPlayersOfClubAccordingToDescendingMarketValue(String clubName , int pagingOffset) {
 
-        List<Player> playerList = this.playerRepository.findAllByClubNameOrderByMarketValueDesc(clubName);
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findAllByClubNameOrderByMarketValueDesc(clubName , pageable);
+
+        List<Player> players = playerList.getContent();
+        this.playerServiceImplRules.checkIfListEmpty(players);
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
     }
 
     @Transactional
@@ -251,5 +347,16 @@ public class PlayerServiceImpl implements PlayerService{
          return playerDtoList;
     }
 
+    @Override
+    public DetermineNumbersForPagingResponse determineNumbersForPaging(int pagingOffset) {
+
+        int pageSize = 2 ;
+        int pageNo = pagingOffset/pageSize;
+
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = new DetermineNumbersForPagingResponse();
+        determineNumbersForPagingResponse.setPageSize(pageSize);
+        determineNumbersForPagingResponse.setPageNo(pageNo);
+        return determineNumbersForPagingResponse;
+    }
 
 }

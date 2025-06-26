@@ -4,14 +4,8 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundExcep
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;;
-import com.somuncu.footballmarkt.dao.ClubRepository;
-import com.somuncu.footballmarkt.dao.LeagueRepository;
-import com.somuncu.footballmarkt.dao.PlayerRepository;
-import com.somuncu.footballmarkt.dao.TrophyRepository;
-import com.somuncu.footballmarkt.entities.Club;
-import com.somuncu.footballmarkt.entities.League;
-import com.somuncu.footballmarkt.entities.Player;
-import com.somuncu.footballmarkt.entities.Trophy;
+import com.somuncu.footballmarkt.dao.*;
+import com.somuncu.footballmarkt.entities.*;
 import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
 import com.somuncu.footballmarkt.response.PageResponse;
 import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
@@ -38,6 +32,7 @@ public class PlayerServiceImpl implements PlayerService{
 
     private PlayerRepository playerRepository;
     private ClubRepository clubRepository;
+    private ClubHistoryRepository clubHistoryRepository;
     private LeagueRepository leagueRepository;
     private TrophyRepository trophyRepository;
     private PlayerServiceImplRules playerServiceImplRules;
@@ -220,6 +215,10 @@ public class PlayerServiceImpl implements PlayerService{
     public void addPlayer(AddPlayerRequest addPlayerRequest) {
 
         Player player = this.modelMapperService.forRequest().map(addPlayerRequest , Player.class);
+        Long clubHistoryId = addPlayerRequest.getClubHistoryId();
+        ClubHistory clubHistory = this.clubHistoryRepository.findById(clubHistoryId).orElseThrow(()-> new NoClubFoundException("No club found to assing it to a player "));
+        player.setClubHistory(clubHistory);
+
         player.updateFullName();
 
         if(addPlayerRequest.getTrophyIds() != null) {

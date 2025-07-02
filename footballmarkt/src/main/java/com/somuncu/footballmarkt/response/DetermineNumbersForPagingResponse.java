@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DetermineNumbersForPagingResponse {
 
-    private int pageSize;
     private int pageNo;
+    private int pageSize;
 
 }

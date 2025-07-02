@@ -34,9 +34,11 @@ public class SecurityConfiguration  {
                                         "/api/v1/players/create" ,"/api/v1/players/update" , "/api/v1/players/delete", "/api/v1/players/transfer",
                                         "/api/v1/stats/add", "/api/v1/stats/update" , "/api/v1/stats/delete/{id}",
                                         "/api/v1/images/save" , "/api/v1/images/image/{imageId}/update", "/api/v1/images/image/{imageId}/delete",
-                                        "/api/v1/clubs/add" , "/api/v1/clubs/update" , "/api/v1/clubs/delete",
+                                        "/api/v1/clubs/add" , "/api/v1/clubs/update" , "/api/v1/clubs/delete", "/api/v1/change-league" ,
                                         "/api/v1/clubhistories/clubhistory/add" ,"/api/v1/clubhistories/clubhistory/update", "/api/v1/clubhistories/clubhistory/delete" ,
-                                        "/api/v1/leagues/league/add" , "/api/v1/leagues/league/update" , "/api/v1/leagues/{leagueId}/delete"
+                                        "/api/v1/leagues/league/add" , "/api/v1/leagues/league/update" , "/api/v1/leagues/{leagueId}/delete",
+                                        "/api/v1/arena-games/delete" ,
+                                        "/api/v1/trophies/create" , "/api/v1/trophies/update" , "/api/v1/trophies/trophy/delete/{id}"
                                         ).hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )

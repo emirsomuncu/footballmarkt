@@ -72,8 +72,8 @@ public class PlayerServiceImpl implements PlayerService{
     public PageResponse<PlayerDto> getMostViewedPlayers(int pagingOffset ) {
 
         DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
-        int pageSize = determineNumbersForPagingResponse.getPageSize();
         int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         Page<Player> playerList = this.playerRepository.findAllByOrderByProfileViewCountDesc(pageable);
@@ -96,8 +96,8 @@ public class PlayerServiceImpl implements PlayerService{
     public PageResponse<PlayerDto> listPlayersAccordingToNation(String nation , int pagingOffset) {
 
         DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
-        int pageSize = determineNumbersForPagingResponse.getPageSize();
         int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         Page<Player> playerList = this.playerRepository.findPlayerByNation(nation,pageable);
@@ -129,8 +129,8 @@ public class PlayerServiceImpl implements PlayerService{
     public PageResponse<PlayerDto> listPlayersAccordingToPosition(String position , int pagingOffset) {
 
         DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
-        int pageSize = determineNumbersForPagingResponse.getPageSize();
         int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         Page<Player> playerList = this.playerRepository.findPlayerByPosition(position , pageable);
@@ -163,8 +163,8 @@ public class PlayerServiceImpl implements PlayerService{
     public PageResponse<PlayerDto> listAllPlayersAccordingToDescendingMarketValue(int pagingOffset) {
 
         DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
-        int pageSize = determineNumbersForPagingResponse.getPageSize();
         int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         Page<Player> playerList = this.playerRepository.findAllByOrderByMarketValueDesc(pageable);
@@ -189,8 +189,8 @@ public class PlayerServiceImpl implements PlayerService{
     public PageResponse<PlayerDto> listAllPlayersOfClubAccordingToDescendingMarketValue(String clubName , int pagingOffset) {
 
         DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
-        int pageSize = determineNumbersForPagingResponse.getPageSize();
         int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
         Page<Player> playerList = this.playerRepository.findAllByClubNameOrderByMarketValueDesc(clubName , pageable);
@@ -352,10 +352,7 @@ public class PlayerServiceImpl implements PlayerService{
         int pageSize = 2 ;
         int pageNo = pagingOffset/pageSize;
 
-        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = new DetermineNumbersForPagingResponse();
-        determineNumbersForPagingResponse.setPageSize(pageSize);
-        determineNumbersForPagingResponse.setPageNo(pageNo);
-        return determineNumbersForPagingResponse;
+        return new DetermineNumbersForPagingResponse(pageSize,pageNo);
     }
 
 }

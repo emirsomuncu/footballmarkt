@@ -5,16 +5,21 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.arenagame.NoArenaGame
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.ClubAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.clubhistory.NoClubHistoryFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.community.NoCommunityFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.community.NotAbleToDoThisOperationException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.images.WrongSaveImageRequestException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.league.NoLeaguesFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.post.NoPostFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.TrophyAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserAlreadyInCommunityException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserNotFoundException;
 import com.somuncu.footballmarkt.response.HandlerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,5 +102,30 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidPlayerIdException.class)
     public ResponseEntity<HandlerResponse> handleInvalidPlayerIdException(InvalidPlayerIdException invalidPlayerIdException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(invalidPlayerIdException.getMessage()));
+    }
+
+    @ExceptionHandler(NoCommunityFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoCommunityFoundException(NoCommunityFoundException noCommunityFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noCommunityFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(NotAbleToDoThisOperationException.class)
+    public ResponseEntity<HandlerResponse> handleNotAbleToDoThisOperationException(NotAbleToDoThisOperationException notAbleToDoThisOperationException){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new HandlerResponse(notAbleToDoThisOperationException.getMessage()));
+    }
+
+    @ExceptionHandler(NoPostFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoPostFoundException(NoPostFoundException noPostFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noPostFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoPostFoundException(UserNotFoundException userNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(userNotFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(UserAlreadyInCommunityException.class)
+    public ResponseEntity<HandlerResponse> handleUserAlreadyInCommunityException(UserAlreadyInCommunityException userAlreadyInCommunityException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(userAlreadyInCommunityException.getMessage()));
     }
 }

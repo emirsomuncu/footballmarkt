@@ -15,6 +15,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyE
 import com.somuncu.footballmarkt.core.utiliites.exceptions.post.NoPostFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.transferrumor.NoTransferRumorFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.TrophyAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.user.UserAlreadyExistsException;
@@ -128,4 +129,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<HandlerResponse> handleUserAlreadyInCommunityException(UserAlreadyInCommunityException userAlreadyInCommunityException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HandlerResponse(userAlreadyInCommunityException.getMessage()));
     }
+
+    @ExceptionHandler(NoTransferRumorFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoTransferRumorFoundException(NoTransferRumorFoundException noTransferRumorFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTransferRumorFoundException.getMessage()));
+    }
+
 }

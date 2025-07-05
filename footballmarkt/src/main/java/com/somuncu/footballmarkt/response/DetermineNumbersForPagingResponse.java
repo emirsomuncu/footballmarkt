@@ -6,11 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class DetermineNumbersForPagingResponse {
 
     private int pageNo;
     private int pageSize;
 
+    public DetermineNumbersForPagingResponse(int pageNo, int pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
 }

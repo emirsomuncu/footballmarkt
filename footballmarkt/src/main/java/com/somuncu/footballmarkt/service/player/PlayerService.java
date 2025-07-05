@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PlayerService {
 
-    public List<Player> listAllPlayers();
+    public PageResponse<PlayerDto> listAllPlayers(int pagingOffset);
     public Player getPlayerById(Long playerId);
     public Player getPlayerByFullName(String fullName);
     public PageResponse<PlayerDto> getMostViewedPlayers(int pagingOffset); // pagination eklendi

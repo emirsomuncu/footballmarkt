@@ -39,10 +39,28 @@ public class PlayerServiceImpl implements PlayerService{
     private ModelMapperService modelMapperService ;
 
     @Override
-    public List<Player> listAllPlayers() {
-        List<Player> playerList = this.playerRepository.findAll();
-        this.playerServiceImplRules.checkIfListEmpty(playerList);
-        return playerList;
+    public PageResponse<PlayerDto> listAllPlayers(int pagingOffset) {
+
+        DetermineNumbersForPagingResponse determineNumbersForPagingResponse = determineNumbersForPaging(pagingOffset);
+        int pageNo = determineNumbersForPagingResponse.getPageNo();
+        int pageSize = determineNumbersForPagingResponse.getPageSize();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Player> playerList = this.playerRepository.findAll(pageable);
+
+        List<Player> players = playerList.getContent();
+        List<PlayerDto> playerDtoList = players.stream().map(player -> this.modelMapperService.forResponse().map(player ,PlayerDto.class)).collect(Collectors.toList());
+
+        PageResponse<PlayerDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(playerDtoList);
+        pageResponse.setPageNo(playerList.getNumber());
+        pageResponse.setPageSize(playerList.getSize());
+        pageResponse.setTotalElements(playerList.getTotalElements());
+        pageResponse.setTotalPages(playerList.getTotalPages());
+        pageResponse.setLast(playerList.isLast());
+
+        return pageResponse;
+
     }
 
     @Override
@@ -352,7 +370,7 @@ public class PlayerServiceImpl implements PlayerService{
         int pageSize = 2 ;
         int pageNo = pagingOffset/pageSize;
 
-        return new DetermineNumbersForPagingResponse(pageSize,pageNo);
+        return new DetermineNumbersForPagingResponse(pageNo,pageSize);
     }
 
 }

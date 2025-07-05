@@ -23,11 +23,10 @@ public class PlayersController {
     private PlayerService playerService;
 
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse> listAllPlayers() {
+    public ResponseEntity<ApiResponse> listAllPlayers(@RequestParam(defaultValue = "0") int pagingOffset) {
 
-        List<Player> playerList = playerService.listAllPlayers();
-        List<PlayerDto> playerDtosList = playerService.convertPlayerListToPlayerDtoList(playerList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , playerDtosList ));
+        PageResponse<PlayerDto> pageResponse = playerService.listAllPlayers(pagingOffset);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , pageResponse ));
     }
 
     @GetMapping("/player")

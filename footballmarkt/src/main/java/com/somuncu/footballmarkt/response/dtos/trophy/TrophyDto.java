@@ -1,5 +1,6 @@
 package com.somuncu.footballmarkt.response.dtos.trophy;
 
+import com.somuncu.footballmarkt.response.dtos.image.ImageDtoForTrophyDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

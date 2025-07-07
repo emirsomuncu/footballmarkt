@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.response.dtos.club;
+package com.somuncu.footballmarkt.response.dtos.image;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageDtoForTrophyDtosClubDto {
+public class ImageDtoForPlayerValueEstimationGameResponse {
 
     private String downloadUrl;
 }

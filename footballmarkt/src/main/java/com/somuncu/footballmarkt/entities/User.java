@@ -28,6 +28,8 @@ public class User {
     private String role;
     private Long noOfCommunityOwnership = 0L ;
     private Long noOfCommunityRegistered = 0L ;
+    private Double playerValueEstimationSuccess = 0.0 ;
+    private Double clubValueEstimationSuccess = 0.0 ;
 
     @CreationTimestamp
     private Date createdAt;
@@ -41,6 +43,11 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Community> communities = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<PlayerValueEstimationGame> playerValueEstimationGames = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<ClubValueEstimationGame> clubValueEstimationGames = new ArrayList<>();
 
     public void updateNoOfCommunityOwnership() {
         Long count = 0L;
@@ -59,4 +66,33 @@ public class User {
         this.noOfCommunityRegistered = count;
     }
 
+    public void updatePlayerValueEstimationSuccess() {
+
+        Long totalGame = 0L ;
+        Long successfulEstimation = 0L ;
+        double successRate = 0.0 ;
+        for(PlayerValueEstimationGame  playerValueEstimationGame : playerValueEstimationGames) {
+            totalGame ++ ;
+            if(playerValueEstimationGame.getChosenPlayer() == playerValueEstimationGame.getCorrectPlayer()) {
+                successfulEstimation++;
+            }
+        }
+        successRate = Math.round(((double) successfulEstimation / totalGame) * 100 * 100.0) / 100.0;
+        this.playerValueEstimationSuccess = successRate;
+    }
+
+    public void updateClubValueEstimationSuccess() {
+
+        Long totalGame = 0L ;
+        Long successfulEstimation = 0L ;
+        double successRate = 0.0 ;
+        for(ClubValueEstimationGame  clubValueEstimationGame : clubValueEstimationGames) {
+            totalGame ++ ;
+            if(clubValueEstimationGame.getChosenClub() == clubValueEstimationGame.getCorrectClub()) {
+                successfulEstimation++;
+            }
+        }
+        successRate = Math.round(((double) successfulEstimation / totalGame) * 100 * 100.0) / 100.0;
+        this.clubValueEstimationSuccess = successRate;
+    }
 }

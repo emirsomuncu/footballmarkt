@@ -1,5 +1,6 @@
 package com.somuncu.footballmarkt.response.dtos.player;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClubDtoForPlayer {
+public class PlayerDtoForStatsDto {
 
-    private String name;
-    private int foundationYear;
-    private Double clubValue;
+    private String firstName;
+    private String lastName;
+    private String position;
 
 }

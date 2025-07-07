@@ -12,6 +12,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.images.WrongSaveImage
 import com.somuncu.footballmarkt.core.utiliites.exceptions.league.NoLeaguesFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.playervalueestimationgame.NoPlayerValueEstimationGameFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.post.NoPostFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
@@ -133,6 +134,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoTransferRumorFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoTransferRumorFoundException(NoTransferRumorFoundException noTransferRumorFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTransferRumorFoundException.getMessage()));
+    }
+    @ExceptionHandler(NoPlayerValueEstimationGameFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoPlayerValueEstimationGameFoundException(NoPlayerValueEstimationGameFoundException noPlayerValueEstimationGameFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noPlayerValueEstimationGameFoundException.getMessage()));
     }
 
 }

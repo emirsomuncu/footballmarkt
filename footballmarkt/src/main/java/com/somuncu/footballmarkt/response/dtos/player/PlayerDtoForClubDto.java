@@ -1,6 +1,6 @@
-package com.somuncu.footballmarkt.response.dtos.club;
+package com.somuncu.footballmarkt.response.dtos.player;
 
-import com.somuncu.footballmarkt.response.dtos.player.ImageDtoForPlayerDto;
+import com.somuncu.footballmarkt.response.dtos.image.ImageDtoForPlayerDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

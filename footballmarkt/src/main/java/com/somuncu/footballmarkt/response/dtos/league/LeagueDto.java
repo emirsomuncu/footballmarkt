@@ -1,6 +1,8 @@
 package com.somuncu.footballmarkt.response.dtos.league;
 
-import com.somuncu.footballmarkt.entities.Image;
+import com.somuncu.footballmarkt.response.dtos.club.ClubDtoForLeagueDto;
+import com.somuncu.footballmarkt.response.dtos.image.ImageDtoForLeagueDto;
+import com.somuncu.footballmarkt.response.dtos.trophy.TrophyDtoForLeagueDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

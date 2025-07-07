@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArenaGameDto {
 
+    private Long id;
     private PlayerDtoForArenaGameDto player1;
     private PlayerDtoForArenaGameDto player2;
     private PlayerDtoForArenaGameDto winnerPlayer;

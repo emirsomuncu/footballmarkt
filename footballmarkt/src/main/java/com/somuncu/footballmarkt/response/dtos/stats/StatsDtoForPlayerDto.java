@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.response.dtos.player;
+package com.somuncu.footballmarkt.response.dtos.stats;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

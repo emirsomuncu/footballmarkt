@@ -1,6 +1,6 @@
-package com.somuncu.footballmarkt.response.dtos.club;
+package com.somuncu.footballmarkt.response.dtos.trophy;
 
-import jdk.jfr.BooleanFlag;
+import com.somuncu.footballmarkt.response.dtos.image.ImageDtoForTrophyDtosClubDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface PlayerRepository extends JpaRepository<Player , Long> {
 
+    @Query(value = "SELECT * FROM player ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    public Player findRandomPlayer();
 
     @Query(value = "SELECT p.* FROM player p JOIN club c ON p.club_id = c.id JOIN league l ON c.league_id = l.id WHERE l.id = :leagueId ORDER BY RAND() LIMIT 1" , nativeQuery = true)
     public Player findOnePlayerByUsingLeagueId(Long leagueId);

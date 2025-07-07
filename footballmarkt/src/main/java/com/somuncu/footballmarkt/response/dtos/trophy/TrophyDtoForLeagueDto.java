@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageDtoForTrophyDto {
+public class TrophyDtoForLeagueDto {
 
-    private String downloadUrl;
+    private String season;
+    private String clubName;
+
 }

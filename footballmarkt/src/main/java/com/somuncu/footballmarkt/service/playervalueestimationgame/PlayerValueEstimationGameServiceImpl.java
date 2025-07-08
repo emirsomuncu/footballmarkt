@@ -78,7 +78,7 @@ public class PlayerValueEstimationGameServiceImpl implements PlayerValueEstimati
 
         User currentUser = this.getCurrentUser(userDetails);
         if(!currentUser.equals(playerValueEstimationGame.getUser())) {
-            throw new NotAbleToDoThisOperationException("You can not pick player for this game please create new game");
+            throw new NotAbleToDoThisOperationException("You can not pick player for this game !");
         }
 
         PlayerValueEstimationGame gameToPlay = currentUser.getPlayerValueEstimationGames().stream().filter(game -> game.getId().equals(playerValueEstimationGame.getId())).findFirst().orElseThrow(()-> new NoPlayerValueEstimationGameFoundException("No game found to play"));

@@ -5,6 +5,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.arenagame.NoArenaGame
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.ClubAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.clubhistory.NoClubHistoryFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.clubvalueestimationgame.NoClubValueEstimationGameFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.community.NoCommunityFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.community.NotAbleToDoThisOperationException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
@@ -135,9 +136,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<HandlerResponse> handleNoTransferRumorFoundException(NoTransferRumorFoundException noTransferRumorFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTransferRumorFoundException.getMessage()));
     }
+
     @ExceptionHandler(NoPlayerValueEstimationGameFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoPlayerValueEstimationGameFoundException(NoPlayerValueEstimationGameFoundException noPlayerValueEstimationGameFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noPlayerValueEstimationGameFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(NoClubValueEstimationGameFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoClubValueEstimationGameFoundException(NoClubValueEstimationGameFoundException noClubValueEstimationGameFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noClubValueEstimationGameFoundException.getMessage()));
     }
 
 }

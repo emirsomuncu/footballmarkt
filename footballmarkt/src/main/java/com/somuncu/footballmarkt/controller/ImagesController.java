@@ -37,6 +37,13 @@ public class ImagesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Images successfully saved" , saveImageResponses));
     }
 
+    @PostMapping("/save-for-news")
+    public ResponseEntity<ApiResponse> saveImageForNews(@RequestParam List<MultipartFile> files) {
+
+        List<SaveImageResponse> saveImageResponses = this.imageService.saveImageForNews(files);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Images successfully saved" , saveImageResponses));
+    }
+
     @GetMapping("/image/{imageId}")
     public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId ) throws SQLException {
 
@@ -54,9 +61,11 @@ public class ImagesController {
                                                    @RequestParam(required = false) Long playerId ,
                                                    @RequestParam(required = false) Long clubId ,
                                                    @RequestParam(required = false) Long trophyId ,
-                                                   @RequestParam(required = false) Long leagueId) {
+                                                   @RequestParam(required = false) Long leagueId ,
+                                                   @RequestParam(required = false) Long newsId
+    ) {
         try{
-            UpdateImageResponse updateImageResponse = this.imageService.updateImage(file,imageId,playerId , clubId , trophyId , leagueId);
+            UpdateImageResponse updateImageResponse = this.imageService.updateImage(file,imageId,playerId , clubId , trophyId , leagueId , newsId);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Updated successfully" , updateImageResponse));
         }catch(Exception exception){
             throw new RuntimeException(exception.getMessage());

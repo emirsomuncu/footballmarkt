@@ -39,7 +39,8 @@ public class SecurityConfiguration  {
                                         "/api/v1/leagues/league/add" , "/api/v1/leagues/league/update" , "/api/v1/leagues/{leagueId}/delete",
                                         "/api/v1/arena-games/delete" ,
                                         "/api/v1/trophies/create" , "/api/v1/trophies/update" , "/api/v1/trophies/trophy/delete/{id}" ,
-                                        "/api/v1/transfer-rumors/add" , "/api/v1/transfer-rumors/update", "/api/v1/transfer-rumors/delete"
+                                        "/api/v1/transfer-rumors/add" , "/api/v1/transfer-rumors/update", "/api/v1/transfer-rumors/delete" ,
+                                        "/api/v1/news/add", "/api/v1/news/update" , "/api/v1/news/delete"
                                 ).hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )

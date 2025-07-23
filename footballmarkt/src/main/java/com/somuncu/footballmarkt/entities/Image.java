@@ -36,6 +36,9 @@ public class Image {
     @ManyToOne
     private League league;
 
+    @ManyToOne
+    private News news;
+
     public Image(Long id, String fileName, String fileType, Blob image, String downloadUrl) {
         this.id = id;
         this.fileName = fileName;

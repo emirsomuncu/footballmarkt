@@ -1,4 +1,4 @@
-package com.somuncu.footballmarkt.response;
+package com.somuncu.footballmarkt.response.dtos.image;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveImageResponse {
+public class ImageDtoForNewsDto {
 
-    private Long id;
-    private String fileName;
     private String downloadUrl;
+
 }

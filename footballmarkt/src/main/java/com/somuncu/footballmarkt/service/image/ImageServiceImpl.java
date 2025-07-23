@@ -3,6 +3,7 @@ package com.somuncu.footballmarkt.service.image;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.league.NoLeaguesFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.news.NoNewsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
@@ -31,11 +32,12 @@ public class ImageServiceImpl implements ImageService{
     private final ClubRepository clubRepository;
     private final LeagueRepository leagueRepository;
     private final TrophyRepository trophyRepository;
+    private final NewsRepository newsRepository;
     private final ModelMapperService modelMapperService;
     private final ImageServiceImplRules imageServiceImplRules;
 
     @Override
-    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId ) {
+    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId) {
 
         this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , trophyId , leagueId );
 
@@ -83,12 +85,42 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
+    public List<SaveImageResponse> saveImageForNews(List<MultipartFile> files) {
+
+        List<SaveImageResponse> saveImageResponses = files.stream().map(file -> {
+
+            try {
+                Image image = new Image();
+                image.setFileName(file.getOriginalFilename());
+                image.setFileType(file.getContentType());
+                image.setImage(new SerialBlob(file.getBytes()));
+                String buildDownloadUrl = "/api/v1/images/image/";
+                String downloadUrl = buildDownloadUrl + image.getId();
+                image.setDownloadUrl(downloadUrl);
+                Image savedImage = this.imageRepository.save(image);
+                savedImage.setDownloadUrl(buildDownloadUrl+ savedImage.getId());
+                this.imageRepository.save(savedImage);
+
+                SaveImageResponse saveImageResponse = this.modelMapperService.forResponse().map(savedImage , SaveImageResponse.class);
+                return saveImageResponse;
+            }
+            catch (Exception exception) {
+                throw new RuntimeException(exception.getMessage());
+            }
+
+        }).collect(Collectors.toList());
+
+
+        return saveImageResponses;
+    }
+
+    @Override
     public Image getImageById(Long imageId) {
         return this.imageRepository.findById(imageId).orElseThrow(()-> new NoImageFoundException("No image found to download"));
     }
 
     @Override
-    public UpdateImageResponse updateImage(MultipartFile file, Long imageId , Long playerId , Long clubId , Long leagueId , Long trophyId) throws SQLException, IOException {
+    public UpdateImageResponse updateImage(MultipartFile file, Long imageId , Long playerId , Long clubId , Long leagueId , Long trophyId , Long newsId) throws SQLException, IOException {
 
         this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , leagueId , trophyId);
 
@@ -101,6 +133,7 @@ public class ImageServiceImpl implements ImageService{
         image.setClub(null);
         image.setLeague(null);
         image.setTrophy(null);
+        image.setNews(null);
 
         if(playerId != null) {
             Player player = this.playerRepository.findById(playerId).orElseThrow(()-> new NoPlayerFoundException("No player found to add images"));
@@ -117,6 +150,10 @@ public class ImageServiceImpl implements ImageService{
         else if (trophyId != null) {
             Trophy trophy = this.trophyRepository.findById(trophyId).orElseThrow(()-> new NoTrophyFoundException("No trophy found to add image"));
             image.setTrophy(trophy);
+        }
+        else if(newsId != null) {
+            News news = this.newsRepository.findById(newsId).orElseThrow(()-> new NoNewsFoundException("No news found to add image"));
+            image.setNews(news);
         }
 
         this.imageRepository.save(image);

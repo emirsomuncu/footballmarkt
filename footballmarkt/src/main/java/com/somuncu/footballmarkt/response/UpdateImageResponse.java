@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateImageResponse {
 
+    private Long id;
     private String fileName;
     private String downloadUrl;
 }

@@ -37,7 +37,7 @@ public class ImageServiceImpl implements ImageService{
     private final ImageServiceImplRules imageServiceImplRules;
 
     @Override
-    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId) {
+    public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId , Long newsId) {
 
         this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , trophyId , leagueId );
 
@@ -64,6 +64,10 @@ public class ImageServiceImpl implements ImageService{
                     Trophy trophy = this.trophyRepository.findById(trophyId).orElseThrow(()-> new NoTrophyFoundException("No trophy found to add image"));
                     image.setTrophy(trophy);
                 }
+                else if (newsId != null) {
+                    News news = this.newsRepository.findById(newsId).orElseThrow(()-> new NoNewsFoundException("No news found to add image"));
+                    image.setNews(news);
+                }
 
                 String buildDownloadUrl = "/api/v1/images/image/";
                 String downloadUrl = buildDownloadUrl + image.getId();
@@ -85,7 +89,7 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public List<SaveImageResponse> saveImageForNews(List<MultipartFile> files) {
+    public List<SaveImageResponse> saveImageForNewThings(List<MultipartFile> files) {
 
         List<SaveImageResponse> saveImageResponses = files.stream().map(file -> {
 

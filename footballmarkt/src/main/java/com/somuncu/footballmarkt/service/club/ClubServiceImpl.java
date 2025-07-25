@@ -1,16 +1,11 @@
 package com.somuncu.footballmarkt.service.club;
 
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.league.NoLeaguesFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
-import com.somuncu.footballmarkt.dao.ClubHistoryRepository;
-import com.somuncu.footballmarkt.dao.ClubRepository;
-import com.somuncu.footballmarkt.dao.LeagueRepository;
-import com.somuncu.footballmarkt.dao.PlayerRepository;
-import com.somuncu.footballmarkt.entities.Club;
-import com.somuncu.footballmarkt.entities.ClubHistory;
-import com.somuncu.footballmarkt.entities.League;
-import com.somuncu.footballmarkt.entities.Player;
+import com.somuncu.footballmarkt.dao.*;
+import com.somuncu.footballmarkt.entities.*;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
 import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
@@ -29,6 +24,7 @@ public class ClubServiceImpl implements ClubService{
     private final ClubRepository clubRepository;
     private final PlayerRepository playerRepository;
     private final LeagueRepository leagueRepository;
+    private final ImageRepository imageRepository;
     private final ClubHistoryRepository clubHistoryRepository;
     private final ClubServiceImplRules clubServiceImplRules;
     private final ModelMapperService modelMapperService;
@@ -66,8 +62,13 @@ public class ClubServiceImpl implements ClubService{
         Club club = this.modelMapperService.forRequest().map(createClubRequest , Club.class);
         this.clubServiceImplRules.checkIfClubExists(club);
         club.setClubValue(0.0);
+        List<Long> ids = createClubRequest.getImagesIds();
+        for(Long id : ids) {
+            Image image = this.imageRepository.findById(id).orElseThrow(()-> new NoImageFoundException("No image found to assign to club"));
+            image.setClub(club);
+            club.getImages().add(image);
+        }
         this.clubRepository.save(club);
-
     }
 
     @Override

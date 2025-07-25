@@ -28,19 +28,20 @@ public class ImagesController {
     private final ImageService imageService;
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse> saveImage(@RequestParam List<MultipartFile> files ,
+    public ResponseEntity<ApiResponse> saveImageForExistingThings(@RequestParam List<MultipartFile> files ,
                                                  @RequestParam(required = false) Long playerId ,
                                                  @RequestParam(required = false) Long clubId ,
                                                  @RequestParam(required = false) Long trophyId ,
-                                                 @RequestParam(required = false) Long leagueId) {
-        List<SaveImageResponse> saveImageResponses = this.imageService.saveImage(files , playerId , clubId , trophyId , leagueId);
+                                                 @RequestParam(required = false) Long leagueId ,
+                                                 @RequestParam(required = false) Long newsId ) {
+        List<SaveImageResponse> saveImageResponses = this.imageService.saveImage(files , playerId , clubId , trophyId , leagueId , newsId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Images successfully saved" , saveImageResponses));
     }
 
-    @PostMapping("/save-for-news")
-    public ResponseEntity<ApiResponse> saveImageForNews(@RequestParam List<MultipartFile> files) {
+    @PostMapping("/save-for-new-things")
+    public ResponseEntity<ApiResponse> saveImageForNewThings(@RequestParam List<MultipartFile> files) {
 
-        List<SaveImageResponse> saveImageResponses = this.imageService.saveImageForNews(files);
+        List<SaveImageResponse> saveImageResponses = this.imageService.saveImageForNewThings(files);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Images successfully saved" , saveImageResponses));
     }
 

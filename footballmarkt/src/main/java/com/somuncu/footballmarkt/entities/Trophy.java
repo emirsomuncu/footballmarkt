@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class Trophy {
     private String season;
 
     @OneToMany(mappedBy = "trophy" , cascade = CascadeType.ALL ,orphanRemoval = true)
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @ManyToOne
     private League league;

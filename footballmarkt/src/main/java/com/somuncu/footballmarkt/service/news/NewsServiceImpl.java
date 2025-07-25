@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +71,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Transactional
     public void createNews(CreateNewsRequest createNewsRequest) {
 
         News news = new News();
@@ -79,16 +81,17 @@ public class NewsServiceImpl implements NewsService {
             news.setPlayer(null);
         }
         else {
-            Player player = this.playerRepository.findById(createNewsRequest.getPlayerId()).orElseThrow(()-> new NoPlayerFoundException("No player found to assign news"));
+            Player player = this.playerRepository.findById(createNewsRequest.getPlayerId()).orElseThrow(()-> new NoPlayerFoundException("No player found to assign to news"));
             news.setPlayer(player);
         }
 
-        Club club = this.clubRepository.findById(createNewsRequest.getClubId()).orElseThrow(()-> new NoClubFoundException("No club found to assign news"));
+        Club club = this.clubRepository.findById(createNewsRequest.getClubId()).orElseThrow(()-> new NoClubFoundException("No club found to assign to news"));
         news.setClub(club);
 
         for(Long imageId : createNewsRequest.getImagesIds()) {
             Image image = this.imageRepository.findById(imageId).orElseThrow(()-> new NoImageFoundException("No image found"));
             image.setNews(news);
+            news.getImages().add(image);
         }
 
         this.newsRepository.save(news);
@@ -99,7 +102,7 @@ public class NewsServiceImpl implements NewsService {
 
         News newsToUpdate = this.newsRepository.findById(updateNewsRequest.getId()).orElseThrow(()-> new NoNewsFoundException("No news found to update"));
         newsToUpdate.setText(updateNewsRequest.getText());
-        newsToUpdate.setPlayer(this.playerRepository.findById(updateNewsRequest.getPlayerId()).orElseThrow(()-> new NoPlayerFoundException("No player found for assigning to news")));
+        newsToUpdate.setPlayer(this.playerRepository.findById(updateNewsRequest.getPlayerId()).orElseThrow(()-> new NoPlayerFoundException("No player found to assign to news")));
         newsToUpdate.setClub(this.clubRepository.findById(updateNewsRequest.getClubId()).orElseThrow(()-> new NoClubFoundException("No club found for assigning to news")));
 
     }

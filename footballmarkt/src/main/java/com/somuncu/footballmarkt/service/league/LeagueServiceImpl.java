@@ -1,7 +1,10 @@
 package com.somuncu.footballmarkt.service.league;
 
+import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
+import com.somuncu.footballmarkt.dao.ImageRepository;
 import com.somuncu.footballmarkt.dao.LeagueRepository;
+import com.somuncu.footballmarkt.entities.Image;
 import com.somuncu.footballmarkt.entities.League;
 import com.somuncu.footballmarkt.response.dtos.league.LeagueDto;
 import com.somuncu.footballmarkt.request.league.CreateLeagueRequest;
@@ -19,6 +22,7 @@ public class LeagueServiceImpl implements LeagueService {
 
     private final LeagueRepository leagueRepository;
     private final ModelMapperService modelMapperService;
+    private final ImageRepository imageRepository;
     private final LeagueServiceImplRules leagueServiceImplRules;
 
     @Override
@@ -50,8 +54,13 @@ public class LeagueServiceImpl implements LeagueService {
 
         League league = this.modelMapperService.forRequest().map(createLeagueRequest , League.class);
         league.setLeagueValue(0.0);
+        List<Long> ids = createLeagueRequest.getImagesIds();
+        for(Long id : ids) {
+            Image image = this.imageRepository.findById(id).orElseThrow(()-> new NoImageFoundException("No image found to assign to club"));
+            image.setLeague(league);
+            league.getImages().add(image);
+        }
         this.leagueRepository.save(league);
-
     }
 
     @Override

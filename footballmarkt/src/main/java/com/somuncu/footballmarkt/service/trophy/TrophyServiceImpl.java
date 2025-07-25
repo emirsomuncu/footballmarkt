@@ -1,12 +1,15 @@
 package com.somuncu.footballmarkt.service.trophy;
 
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.images.NoImageFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
 import com.somuncu.footballmarkt.dao.ClubRepository;
+import com.somuncu.footballmarkt.dao.ImageRepository;
 import com.somuncu.footballmarkt.dao.PlayerRepository;
 import com.somuncu.footballmarkt.dao.TrophyRepository;
 import com.somuncu.footballmarkt.entities.Club;
+import com.somuncu.footballmarkt.entities.Image;
 import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.entities.Trophy;
 import com.somuncu.footballmarkt.request.trophy.CreateTrophyRequest;
@@ -26,6 +29,7 @@ public class TrophyServiceImpl implements TrophyService {
     private final TrophyRepository trophyRepository;
     private final ClubRepository clubRepository;
     private final PlayerRepository playerRepository;
+    private final ImageRepository imageRepository;
     private final TrophyServiceImplRules trophyServiceImplRules;
     private final ModelMapperService modelMapperService;
 
@@ -71,6 +75,12 @@ public class TrophyServiceImpl implements TrophyService {
 
         this.trophyServiceImplRules.checkIfTrophyExists(createTrophyRequest);
         Trophy trophy = this.modelMapperService.forRequest().map(createTrophyRequest , Trophy.class);
+        for(Long imageId : createTrophyRequest.getImagesIds()) {
+            Image image = this.imageRepository.findById(imageId).orElseThrow(()-> new NoImageFoundException("No image found"));
+            image.setTrophy(trophy);
+            trophy.getImages().add(image);
+        }
+
         this.trophyRepository.save(trophy);
 
         Long clubId = createTrophyRequest.getClubId();

@@ -26,7 +26,7 @@ public class League {
     private List<Club> clubs = new ArrayList<>();
 
     @OneToMany(mappedBy = "league" , cascade = CascadeType.ALL)
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "league" , cascade = CascadeType.ALL)

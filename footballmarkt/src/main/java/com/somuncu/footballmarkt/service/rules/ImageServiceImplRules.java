@@ -13,13 +13,14 @@ public class ImageServiceImplRules {
 
     private final ImageRepository repository;
 
-    public void checkSaveAndUpdateImageParameters(Long playerId , Long clubId , Long leagueId , Long trophyId ) {
+    public void checkSaveAndUpdateImageParameters(Long playerId , Long clubId , Long leagueId , Long trophyId , Long newsId) {
 
         ArrayList<Long> idList = new ArrayList<>();
         idList.add(playerId);
         idList.add(clubId);
         idList.add(leagueId);
         idList.add(trophyId);
+        idList.add(newsId);
 
         int counter = 0;
         for(Long id : idList) {
@@ -29,9 +30,9 @@ public class ImageServiceImplRules {
         }
 
         if(counter == 0) {
-            throw new WrongSaveImageRequestException("You must choose whether you want to upload this image for a player, a league, a club or a cup !");
+            throw new WrongSaveImageRequestException("You must choose whether you want to upload this image for a player, a league, a club  , a news or a cup !");
         } else if ( counter >=2 ) {
-            throw new WrongSaveImageRequestException("You can only choose one of them player , league , club or cup !");
+            throw new WrongSaveImageRequestException("You can only choose one of them player , league , club , news or cup !");
         }
 
     }

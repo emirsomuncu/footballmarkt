@@ -16,6 +16,8 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundE
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.PlayerAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.playervalueestimationgame.NoPlayerValueEstimationGameFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.post.NoPostFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.question.NoQuestionFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.quiz.NoQuizFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.transferrumor.NoTransferRumorFoundException;
@@ -151,6 +153,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoNewsFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoNewsFoundException(NoNewsFoundException noNewsFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noNewsFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(NoQuestionFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoQuestionFoundException(NoQuestionFoundException noQuestionFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noQuestionFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(NoQuizFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoQuizFoundException(NoQuizFoundException noQuizFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noQuizFoundException.getMessage()));
     }
 
 }

@@ -40,7 +40,9 @@ public class SecurityConfiguration  {
                                         "/api/v1/arena-games/delete" ,
                                         "/api/v1/trophies/create" , "/api/v1/trophies/update" , "/api/v1/trophies/trophy/delete/{id}" ,
                                         "/api/v1/transfer-rumors/add" , "/api/v1/transfer-rumors/update", "/api/v1/transfer-rumors/delete" ,
-                                        "/api/v1/news/add", "/api/v1/news/update" , "/api/v1/news/delete"
+                                        "/api/v1/news/add", "/api/v1/news/update" , "/api/v1/news/delete" ,
+                                        "/api/v1/questions/all" , "/api/v1/questions/{category}" , "/api/v1/questions/add" , "/api/v1/questions/update", "/api/v1/questions/delete",
+                                        "/api/v1/quizzes/all" ,"/api/v1/quizzes/{id}/quiz" ,"/api/v1/quizzes/delete"
                                 ).hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )

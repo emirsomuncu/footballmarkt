@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public List<SaveImageResponse> saveImage(List<MultipartFile> files , Long playerId , Long clubId ,  Long trophyId ,Long leagueId , Long newsId) {
 
-        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , trophyId , leagueId );
+        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , trophyId , leagueId , newsId);
 
         List<SaveImageResponse> saveImageResponses = files.stream().map(file -> {
 
@@ -126,7 +126,7 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public UpdateImageResponse updateImage(MultipartFile file, Long imageId , Long playerId , Long clubId , Long leagueId , Long trophyId , Long newsId) throws SQLException, IOException {
 
-        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , leagueId , trophyId);
+        this.imageServiceImplRules.checkSaveAndUpdateImageParameters(playerId , clubId , leagueId , trophyId , newsId);
 
         Image image = this.imageRepository.findById(imageId).orElseThrow(()-> new NoImageFoundException("No image found to update"));
         image.setFileName(file.getOriginalFilename());

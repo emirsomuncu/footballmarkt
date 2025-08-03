@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 @Table
 @SoftDelete
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +31,7 @@ public class User {
     private Long noOfCommunityRegistered = 0L ;
     private Double playerValueEstimationSuccess = 0.0 ;
     private Double clubValueEstimationSuccess = 0.0 ;
+    private Double quizScoreAverage = 0.0;
 
     @CreationTimestamp
     private Date createdAt;
@@ -48,6 +50,9 @@ public class User {
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<ClubValueEstimationGame> clubValueEstimationGames = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Quiz> quizList ;
 
     public void updateNoOfCommunityOwnership() {
         Long count = 0L;
@@ -95,4 +100,20 @@ public class User {
         successRate = Math.round(((double) successfulEstimation / totalGame) * 100 * 100.0) / 100.0;
         this.clubValueEstimationSuccess = successRate;
     }
+
+    public void updateQuizScoreAverage() {
+
+        List<Quiz> quizList = this.getQuizList();
+        int solvedQuiz = 0 ;
+        Double totalQuizPoint = 0.0 ;
+        for(Quiz quiz : quizList) {
+            if(quiz.isSolved()) {
+                solvedQuiz++ ;
+                totalQuizPoint = totalQuizPoint + quiz.getScore();
+            }
+        }
+
+        this.quizScoreAverage = totalQuizPoint / solvedQuiz ;
+    }
+
 }

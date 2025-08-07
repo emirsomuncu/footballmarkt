@@ -119,10 +119,12 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Player transferred the new club" , null));
     }
 
+    /* It causes some errors and should be deactivated until resolved
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deletePlayer(@RequestParam Long playerId) {
 
         this.playerService.deletePlayer(playerId);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Player deleted" , null));
     }
+    */
 }

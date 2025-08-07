@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "player")
-public class Player {
+public class Player implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +54,9 @@ public class Player {
 
     @OneToMany(mappedBy = "winnerPlayer" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<ArenaGame> arenaGamesAsWinnerPlayer = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<News> news ;
 
     public void updateProfileViewCount() {
         profileViewCount ++ ;

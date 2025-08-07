@@ -96,6 +96,7 @@ public class ClubServiceImpl implements ClubService{
 
     }
 
+    /* It causes some errors and should be deactivated until resolved
     @Transactional
     @Override
     public void deleteClub(Long clubId) {
@@ -120,6 +121,7 @@ public class ClubServiceImpl implements ClubService{
         league.updateLeagueValue();
         leagueRepository.save(league);
     }
+    */
 
     @Override
     public ClubDto convertClubToClubDto(Club club) {

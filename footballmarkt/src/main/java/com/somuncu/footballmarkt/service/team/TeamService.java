@@ -1,0 +1,21 @@
+package com.somuncu.footballmarkt.service.team;
+
+import com.somuncu.footballmarkt.entities.User;
+import com.somuncu.footballmarkt.request.team.CreateTeamRequest;
+import com.somuncu.footballmarkt.request.team.UpdateTeamRequest;
+import com.somuncu.footballmarkt.response.dtos.team.TeamDto;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
+
+public interface TeamService {
+
+    public TeamDto getTeamById(Long id);
+    public TeamDto getTeamByTeamName(String teamName);
+    public List<TeamDto> getTeamsByUserName(String userName);
+    public void createTeam(CreateTeamRequest createTeamRequest , UserDetails userDetails);
+    public void updateTeam(UpdateTeamRequest updateTeamRequest , UserDetails userDetails);
+    public void deleteTeam(Long id , UserDetails userDetails);
+    public User getCurentUser(UserDetails userDetails);
+
+}

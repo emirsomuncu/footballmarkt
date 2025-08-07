@@ -330,6 +330,7 @@ public class PlayerServiceImpl implements PlayerService{
         newLeague.updateLeagueValue();
     }
 
+    /* It causes some errors and should be deactivated until resolved
     @Override
     @Transactional
     public void deletePlayer(Long playerId) {
@@ -348,7 +349,7 @@ public class PlayerServiceImpl implements PlayerService{
         league.updateLeagueValue();
         leagueRepository.save(league);
     }
-
+    */
 
     public PlayerDto convertPlayerToPlayerDto(Player player) {
 

@@ -31,6 +31,9 @@ public class Club {
     @OneToMany(mappedBy = "club" , cascade =CascadeType.ALL , orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "club" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<News> news ;
+
     @ManyToOne
     private League league ;
 

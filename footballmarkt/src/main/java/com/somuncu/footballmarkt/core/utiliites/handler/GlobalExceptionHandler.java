@@ -20,6 +20,7 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.question.NoQuestionFo
 import com.somuncu.footballmarkt.core.utiliites.exceptions.quiz.NoQuizFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.StatsAlreadyExistsException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.team.NoTeamFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.transferrumor.NoTransferRumorFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.TrophyAlreadyExistsException;
@@ -163,6 +164,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoQuizFoundException.class)
     public ResponseEntity<HandlerResponse> handleNoQuizFoundException(NoQuizFoundException noQuizFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noQuizFoundException.getMessage()));
+    }
+    @ExceptionHandler(NoTeamFoundException.class)
+    public ResponseEntity<HandlerResponse> handleNoTeamFoundException(NoTeamFoundException noTeamFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new HandlerResponse(noTeamFoundException.getMessage()));
     }
 
 }

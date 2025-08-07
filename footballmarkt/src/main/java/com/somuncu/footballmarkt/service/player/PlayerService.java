@@ -24,7 +24,8 @@ public interface PlayerService {
     public void addPlayer(AddPlayerRequest addPlayerRequest);
     public void updatePlayer(UpdatePlayerRequest updatePlayerRequest);
     public void transferPlayer(Long playerId , Long newClubId);
-    public void deletePlayer(Long playerId);
+
+    // public void deletePlayer(Long playerId); It causes some errors and should be deactivated until resolved
     public PlayerDto convertPlayerToPlayerDto(Player player);
     public List<PlayerDto> convertPlayerListToPlayerDtoList(List<Player> playerList);
     public DetermineNumbersForPagingResponse determineNumbersForPaging(int pagingOffset);

@@ -65,11 +65,13 @@ public class ClubsController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Club's league changed" , null));
     }
 
+    /* It causes some errors and should be deactivated until resolved
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deleteClub(@RequestParam Long clubId) {
 
         this.clubService.deleteClub(clubId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Club deleted" , null ));
     }
+     */
 
 }

@@ -12,7 +12,7 @@ import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.quiz.CreateQuizRequest;
 import com.somuncu.footballmarkt.response.PageResponse;
 import com.somuncu.footballmarkt.response.dtos.quiz.QuizDto;
-import com.somuncu.footballmarkt.response.dtos.quiz.SolveQuizRequest;
+import com.somuncu.footballmarkt.request.quiz.SolveQuizRequest;
 import com.somuncu.footballmarkt.service.question.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;

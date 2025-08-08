@@ -41,13 +41,13 @@ public class TeamsController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createTeam(@RequestBody CreateTeamRequest createTeamRequest , @AuthenticationPrincipal UserDetails userDetails) {
-        this.teamService.createTeam(createTeamRequest , userDetails);
+        TeamDto teamDto = this.teamService.createTeam(createTeamRequest , userDetails);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Successfully created" , null));
     }
 
     @PutMapping("/update")
     public ResponseEntity<ApiResponse> updateTeam(@RequestBody UpdateTeamRequest updateTeamRequest , @AuthenticationPrincipal UserDetails userDetails) {
-        this.teamService.updateTeam(updateTeamRequest, userDetails);
+        TeamDto teamDto = this.teamService.updateTeam(updateTeamRequest, userDetails);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully updated" , null));
     }
 

@@ -15,6 +15,10 @@ import com.somuncu.footballmarkt.request.team.CreateTeamRequest;
 import com.somuncu.footballmarkt.request.team.UpdateTeamRequest;
 import com.somuncu.footballmarkt.response.dtos.team.TeamDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +35,7 @@ public class TeamServiceImpl implements TeamService{
     private final UserRepository userRepository;
     private final ModelMapperService modelMapperService;
 
-
+    @Cacheable(value = "getTeamById" , key = "#id")
     @Override
     public TeamDto getTeamById(Long id) {
 
@@ -39,6 +43,7 @@ public class TeamServiceImpl implements TeamService{
         return this.modelMapperService.forResponse().map(team , TeamDto.class);
     }
 
+    @Cacheable(value = "getTeamByTeamName" , key = "#teamName")
     @Override
     public TeamDto getTeamByTeamName(String teamName) {
 
@@ -46,6 +51,7 @@ public class TeamServiceImpl implements TeamService{
         return this.modelMapperService.forResponse().map(team , TeamDto.class);
     }
 
+    @Cacheable(value = "getTeamsByUserName" , key = "#userName")
     @Override
     public List<TeamDto> getTeamsByUserName(String userName) {
 
@@ -53,8 +59,16 @@ public class TeamServiceImpl implements TeamService{
        return teams.stream().map(team -> this.modelMapperService.forResponse().map(team , TeamDto.class)).collect(Collectors.toList());
     }
 
+    @Caching(put = {
+            @CachePut(value = "getTeamById" , key = "#result.id") ,
+            @CachePut(value = "getTeamByTeamName" , key = "#result.name")
+            } ,
+            evict = {
+            @CacheEvict(value= "getTeamsByUserName" , key= "#result.userName")
+            }
+    )
     @Override
-    public void createTeam(CreateTeamRequest createTeamRequest, UserDetails userDetails) {
+    public TeamDto createTeam(CreateTeamRequest createTeamRequest, UserDetails userDetails) {
 
         Team team = new Team();
         team.setName(createTeamRequest.getName());
@@ -76,11 +90,20 @@ public class TeamServiceImpl implements TeamService{
         team.setTotalMarketValue(totalMarketValue);
 
         team.setUser(this.getCurentUser(userDetails));
-        this.teamRepository.save(team);
+        Team savedTeam = this.teamRepository.save(team);
+        return this.modelMapperService.forResponse().map(savedTeam , TeamDto.class);
     }
 
+    @Caching(put = {
+            @CachePut(value = "getTeamById" , key = "#result.id"),
+            @CachePut(value = "getTeamByTeamName" , key = "#result.name")
+            },
+            evict = {
+            @CacheEvict(value= "getTeamsByUserName" , key= "#result.userName")
+            }
+    )
     @Override
-    public void updateTeam(UpdateTeamRequest updateTeamRequest , UserDetails userDetails) {
+    public TeamDto updateTeam(UpdateTeamRequest updateTeamRequest , UserDetails userDetails) {
 
        Team team = this.teamRepository.findById(updateTeamRequest.getId()).orElseThrow(()-> new NoTeamFoundException("No team found to update"));
 
@@ -102,9 +125,28 @@ public class TeamServiceImpl implements TeamService{
         }
         team.setTotalMarketValue(totalMarketValue);
 
-        this.teamRepository.save(team);
+        Team updatedTeam = this.teamRepository.save(team);
+        return this.modelMapperService.forResponse().map(updatedTeam , TeamDto.class);
     }
 
+    @Override
+    public String getTeamNameByTeamId(Long id) {
+        Team team = this.teamRepository.findById(id).orElseThrow(() -> new NoTeamFoundException("No team found to get team name"));
+        return team.getName();
+    }
+
+    @Override
+    public String getUserNameByTeamId(Long id) {
+        Team team = this.teamRepository.findById(id).orElseThrow(() -> new NoTeamFoundException("No team found to get team name"));
+        return team.getUser().getName();
+    }
+
+    @Caching(evict = {
+            @CacheEvict(value = "getTeamById" , key = "#id"),
+            @CacheEvict(value = "getTeamByTeamName" , key = "#root.target.getTeamNameByTeamId(#id)" , beforeInvocation = true),
+            @CacheEvict(value = "getTeamsByUserName" , key= "#root.target.getUserNameByTeamId(#id)" , beforeInvocation = true)
+            }
+    )
     @Override
     public void deleteTeam(Long id , UserDetails userDetails) {
 

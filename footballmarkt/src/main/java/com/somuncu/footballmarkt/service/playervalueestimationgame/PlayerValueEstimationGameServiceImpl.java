@@ -12,7 +12,7 @@ import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.entities.PlayerValueEstimationGame;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.response.PlayPlayerValueEstimationGameResponse;
-import com.somuncu.footballmarkt.response.dtos.playervalueestimationgame.PlayerValueEstimationGameDto;
+import com.somuncu.footballmarkt.dtos.playervalueestimationgame.PlayerValueEstimationGameDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

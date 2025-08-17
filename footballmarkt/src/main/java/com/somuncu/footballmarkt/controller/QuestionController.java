@@ -21,33 +21,33 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse> getAllQuestions() {
+    public ResponseEntity<ApiResponse<List<Question>>> getAllQuestions() {
         List<Question> questions = this.questionService.getAllQuestions();
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully listed" , questions )) ;
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfully listed" , questions )) ;
     }
 
     @GetMapping("/{category}")
-    public ResponseEntity<ApiResponse> getAllQuestionsByCategory(@PathVariable String category) {
+    public ResponseEntity<ApiResponse<List<Question>>> getAllQuestionsByCategory(@PathVariable String category) {
         List<Question> questions = this.questionService.getAllQuestionsByCategory(category);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully listed" , questions )) ;
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfully listed" , questions )) ;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> createQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) {
+    public ResponseEntity<ApiResponse<Question>> createQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) {
         Question question = this.questionService.createQuestion(createQuestionRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Successfully created" , question)) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Successfully created" , question)) ;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ApiResponse> updateQuestion(@RequestBody UpdateQuestionRequest updateQuestionRequest) {
+    public ResponseEntity<ApiResponse<Question>> updateQuestion(@RequestBody UpdateQuestionRequest updateQuestionRequest) {
         Question question = this.questionService.updateQuestion(updateQuestionRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Successfully updated" , question)) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Successfully updated" , question)) ;
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteQuestion(@RequestParam Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteQuestion(@RequestParam Long id) {
         this.questionService.deleteQuestion(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully deleted", null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfully deleted", null));
     }
 
 }

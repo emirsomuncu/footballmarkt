@@ -11,13 +11,12 @@ import com.somuncu.footballmarkt.entities.Community;
 import com.somuncu.footballmarkt.entities.Post;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.post.CreatePostRequest;
-import com.somuncu.footballmarkt.response.dtos.post.PostDto;
+import com.somuncu.footballmarkt.dtos.post.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

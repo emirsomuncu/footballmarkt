@@ -5,12 +5,11 @@ import com.somuncu.footballmarkt.core.utiliites.exceptions.arenagame.NoArenaGame
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;
 import com.somuncu.footballmarkt.dao.ArenaGameRepository;
-import com.somuncu.footballmarkt.dao.LeagueRepository;
 import com.somuncu.footballmarkt.dao.PlayerRepository;
 import com.somuncu.footballmarkt.entities.ArenaGame;
 import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.response.PlayArenaGameResponse;
-import com.somuncu.footballmarkt.response.dtos.arenagame.ArenaGameDto;
+import com.somuncu.footballmarkt.dtos.arenagame.ArenaGameDto;
 import com.somuncu.footballmarkt.service.rules.ArenaGameServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

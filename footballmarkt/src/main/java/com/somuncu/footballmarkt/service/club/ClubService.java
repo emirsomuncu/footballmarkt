@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.service.club;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
-import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
+import com.somuncu.footballmarkt.dtos.club.ClubDto;
 
 import java.util.List;
 

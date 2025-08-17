@@ -6,7 +6,7 @@ import com.somuncu.footballmarkt.dao.ImageRepository;
 import com.somuncu.footballmarkt.dao.LeagueRepository;
 import com.somuncu.footballmarkt.entities.Image;
 import com.somuncu.footballmarkt.entities.League;
-import com.somuncu.footballmarkt.response.dtos.league.LeagueDto;
+import com.somuncu.footballmarkt.dtos.league.LeagueDto;
 import com.somuncu.footballmarkt.request.league.CreateLeagueRequest;
 import com.somuncu.footballmarkt.request.league.UpdateLeagueRequest;
 import com.somuncu.footballmarkt.service.rules.LeagueServiceImplRules;

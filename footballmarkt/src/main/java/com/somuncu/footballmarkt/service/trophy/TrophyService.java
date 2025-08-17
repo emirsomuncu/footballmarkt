@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.service.trophy;
 import com.somuncu.footballmarkt.entities.Trophy;
 import com.somuncu.footballmarkt.request.trophy.CreateTrophyRequest;
 import com.somuncu.footballmarkt.request.trophy.UpdateTrophyRequest;
-import com.somuncu.footballmarkt.response.dtos.trophy.TrophyDto;
+import com.somuncu.footballmarkt.dtos.trophy.TrophyDto;
 
 import java.util.List;
 

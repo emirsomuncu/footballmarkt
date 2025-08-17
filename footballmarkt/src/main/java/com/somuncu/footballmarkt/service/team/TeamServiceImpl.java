@@ -13,7 +13,7 @@ import com.somuncu.footballmarkt.entities.Team;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.team.CreateTeamRequest;
 import com.somuncu.footballmarkt.request.team.UpdateTeamRequest;
-import com.somuncu.footballmarkt.response.dtos.team.TeamDto;
+import com.somuncu.footballmarkt.dtos.team.TeamDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

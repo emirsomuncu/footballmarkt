@@ -2,7 +2,7 @@ package com.somuncu.footballmarkt.service.quiz;
 
 import com.somuncu.footballmarkt.request.quiz.CreateQuizRequest;
 import com.somuncu.footballmarkt.response.PageResponse;
-import com.somuncu.footballmarkt.response.dtos.quiz.QuizDto;
+import com.somuncu.footballmarkt.dtos.quiz.QuizDto;
 import com.somuncu.footballmarkt.request.quiz.SolveQuizRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 

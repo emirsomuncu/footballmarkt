@@ -8,7 +8,7 @@ import com.somuncu.footballmarkt.dao.*;
 import com.somuncu.footballmarkt.entities.*;
 import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
 import com.somuncu.footballmarkt.response.PageResponse;
-import com.somuncu.footballmarkt.response.dtos.player.PlayerDto;
+import com.somuncu.footballmarkt.dtos.player.PlayerDto;
 import com.somuncu.footballmarkt.request.player.AddPlayerRequest;
 import com.somuncu.footballmarkt.request.player.UpdatePlayerRequest;
 import com.somuncu.footballmarkt.service.rules.PlayerServiceImplRules;
@@ -16,8 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

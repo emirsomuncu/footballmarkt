@@ -6,8 +6,7 @@ import com.somuncu.footballmarkt.request.community.CreateCommunityRequest;
 import com.somuncu.footballmarkt.request.community.UpdateCommunityRequest;
 import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
 import com.somuncu.footballmarkt.response.PageResponse;
-import com.somuncu.footballmarkt.response.dtos.community.CommunityDto;
-import org.springframework.data.domain.Page;
+import com.somuncu.footballmarkt.dtos.community.CommunityDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;

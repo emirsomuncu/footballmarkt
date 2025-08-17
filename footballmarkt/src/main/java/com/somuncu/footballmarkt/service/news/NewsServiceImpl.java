@@ -17,7 +17,7 @@ import com.somuncu.footballmarkt.request.news.CreateNewsRequest;
 import com.somuncu.footballmarkt.request.news.UpdateNewsRequest;
 import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
 import com.somuncu.footballmarkt.response.PageResponse;
-import com.somuncu.footballmarkt.response.dtos.news.NewsDto;
+import com.somuncu.footballmarkt.dtos.news.NewsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

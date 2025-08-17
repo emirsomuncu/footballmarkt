@@ -8,11 +8,10 @@ import com.somuncu.footballmarkt.dao.*;
 import com.somuncu.footballmarkt.entities.*;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
-import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
+import com.somuncu.footballmarkt.dtos.club.ClubDto;
 import com.somuncu.footballmarkt.service.rules.ClubServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

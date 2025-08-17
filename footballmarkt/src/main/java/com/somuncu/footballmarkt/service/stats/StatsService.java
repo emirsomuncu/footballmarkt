@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.service.stats;
 
 import com.somuncu.footballmarkt.entities.Stats;
-import com.somuncu.footballmarkt.response.dtos.stats.StatsDto;
+import com.somuncu.footballmarkt.dtos.stats.StatsDto;
 import com.somuncu.footballmarkt.request.stats.CreateStatsRequest;
 import com.somuncu.footballmarkt.request.stats.UpdateStatsRequest;
 

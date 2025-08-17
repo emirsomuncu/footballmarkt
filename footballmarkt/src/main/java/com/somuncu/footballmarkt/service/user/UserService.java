@@ -2,10 +2,8 @@ package com.somuncu.footballmarkt.service.user;
 
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.user.CreateUserRequest;
-import com.somuncu.footballmarkt.response.dtos.user.UserDto;
+import com.somuncu.footballmarkt.dtos.user.UserDto;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.List;
 
 public interface UserService {
 

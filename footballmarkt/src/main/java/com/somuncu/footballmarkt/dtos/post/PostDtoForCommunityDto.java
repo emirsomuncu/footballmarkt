@@ -1,0 +1,17 @@
+package com.somuncu.footballmarkt.dtos.post;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PostDtoForCommunityDto {
+
+    private String text ;
+    private Date creationTime;
+    private String userName;
+}

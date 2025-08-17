@@ -1,7 +1,7 @@
 package com.somuncu.footballmarkt.controller;
 
 import com.somuncu.footballmarkt.entities.Stats;
-import com.somuncu.footballmarkt.response.dtos.stats.StatsDto;
+import com.somuncu.footballmarkt.dtos.stats.StatsDto;
 import com.somuncu.footballmarkt.request.stats.CreateStatsRequest;
 import com.somuncu.footballmarkt.request.stats.UpdateStatsRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;
@@ -22,36 +22,36 @@ public class StatsController {
 
 
     @GetMapping("/player-stats")
-    public ResponseEntity<ApiResponse> getStatsByPlayerName(@RequestParam String playerFirstName , @RequestParam String playerLastName) {
+    public ResponseEntity<ApiResponse<List<StatsDto>>> getStatsByPlayerName(@RequestParam String playerFirstName , @RequestParam String playerLastName) {
         List<Stats> statsList = this.statsService.getStatsByPlayerName(playerFirstName,playerLastName);
         List<StatsDto> statsDtosList = this.statsService.convertStatsListToStatsDtoList(statsList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , statsDtosList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfull" , statsDtosList));
     }
 
 
     @GetMapping("/player-season-stats")
-    public ResponseEntity<ApiResponse> getStatsByPlayerNameAndSeason(@RequestParam String playerFirstName , @RequestParam String playerLastName, @RequestParam String season) {
+    public ResponseEntity<ApiResponse<StatsDto>> getStatsByPlayerNameAndSeason(@RequestParam String playerFirstName , @RequestParam String playerLastName, @RequestParam String season) {
         Stats stats = this.statsService.getStatsByPlayerNameAndSeason(playerFirstName,playerLastName,season);
         StatsDto statsDto = this.statsService.convertStatsToStatsDto(stats);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , statsDto));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfull" , statsDto));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> createStats(@RequestBody CreateStatsRequest createStatsRequest) {
+    public ResponseEntity<ApiResponse<Void>> createStats(@RequestBody CreateStatsRequest createStatsRequest) {
         this.statsService.createStats(createStatsRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Succesfull" , null));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Succesfull" , null));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ApiResponse> updateStats(@RequestBody UpdateStatsRequest updateStatsRequest) {
+    public ResponseEntity<ApiResponse<Void>> updateStats(@RequestBody UpdateStatsRequest updateStatsRequest) {
         this.statsService.updateStats(updateStatsRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Succesfull" , null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Succesfull" , null));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse> deleteStats(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteStats(@PathVariable Long id) {
         this.statsService.deleteStats(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfull" , null));
     }
 
 }

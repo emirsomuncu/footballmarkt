@@ -2,7 +2,7 @@ package com.somuncu.footballmarkt.service.arena;
 
 import com.somuncu.footballmarkt.entities.ArenaGame;
 import com.somuncu.footballmarkt.response.PlayArenaGameResponse;
-import com.somuncu.footballmarkt.response.dtos.arenagame.ArenaGameDto;
+import com.somuncu.footballmarkt.dtos.arenagame.ArenaGameDto;
 
 public interface ArenaGameService {
 

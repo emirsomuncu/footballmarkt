@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.controller;
 import com.somuncu.footballmarkt.entities.ClubValueEstimationGame;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.response.PlayClubValueEstimationGameResponse;
-import com.somuncu.footballmarkt.response.dtos.clubvalueestimationgame.ClubValueEstimationGameDto;
+import com.somuncu.footballmarkt.dtos.clubvalueestimationgame.ClubValueEstimationGameDto;
 import com.somuncu.footballmarkt.service.clubvalueestimationgame.ClubValueEstimationGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,24 +20,24 @@ public class ClubValueEstimationGameController {
     private final ClubValueEstimationGameService clubValueEstimationGameService;
 
     @PostMapping("/create-game")
-    public ResponseEntity<ApiResponse> createClubValueEstimationGame(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponse<ClubValueEstimationGameDto>> createClubValueEstimationGame(@AuthenticationPrincipal UserDetails userDetails) {
 
         ClubValueEstimationGame clubValueEstimationGame = this.clubValueEstimationGameService.createClubValueEstimationGame(userDetails);
-        ClubValueEstimationGameDto playerValueEstimationGameDto = this.clubValueEstimationGameService.convertToDto(clubValueEstimationGame);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Successfully" , playerValueEstimationGameDto));
+        ClubValueEstimationGameDto clubValueEstimationGameDto = this.clubValueEstimationGameService.convertToDto(clubValueEstimationGame);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Successfully" , clubValueEstimationGameDto));
     }
 
     @PostMapping("/play-game")
-    public ResponseEntity<ApiResponse> playClubValueEstimationGame(@RequestParam Long gameId , @RequestParam Long clubId , @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponse<PlayClubValueEstimationGameResponse>> playClubValueEstimationGame(@RequestParam Long gameId , @RequestParam Long clubId , @AuthenticationPrincipal UserDetails userDetails) {
 
         PlayClubValueEstimationGameResponse playClubValueEstimationGameResponse = this.clubValueEstimationGameService.playClubValueEstimationGame(gameId , clubId , userDetails);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully" , playClubValueEstimationGameResponse));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfully" , playClubValueEstimationGameResponse));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteById(@RequestParam Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteById(@RequestParam Long id) {
         this.clubValueEstimationGameService.deleteClubValueEstimationGameById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfully" , null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfully" , null));
     }
 
 }

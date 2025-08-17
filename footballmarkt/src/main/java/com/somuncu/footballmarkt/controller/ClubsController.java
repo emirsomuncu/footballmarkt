@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.controller;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.request.club.CreateClubRequest;
 import com.somuncu.footballmarkt.request.club.UpdateClubRequest;
-import com.somuncu.footballmarkt.response.dtos.club.ClubDto;
+import com.somuncu.footballmarkt.dtos.club.ClubDto;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.service.club.ClubService;
 import lombok.RequiredArgsConstructor;
@@ -22,47 +22,47 @@ public class ClubsController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse> getAllClubs() {
+    public ResponseEntity<ApiResponse<List<ClubDto>>> getAllClubs() {
 
         List<Club> clubList = this.clubService.getAllClubs();
         List<ClubDto> clubDtosList = this.clubService.convertClubListToClubDtoList(clubList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success" , clubDtosList ));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Success" , clubDtosList ));
     }
 
     @GetMapping("/club/{clubName}")
-    public ResponseEntity<ApiResponse> getClubByName(@PathVariable String clubName) {
+    public ResponseEntity<ApiResponse<ClubDto>> getClubByName(@PathVariable String clubName) {
 
         Club club = this.clubService.getClubByName(clubName);
         ClubDto clubDto = this.clubService.convertClubToClubDto(club);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success" , clubDto));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Success" , clubDto));
     }
 
     @GetMapping("/{leagueName}")
-    public ResponseEntity<ApiResponse> getClubAccordingToLeagueName(@PathVariable String leagueName) {
+    public ResponseEntity<ApiResponse<List<ClubDto>>> getClubAccordingToLeagueName(@PathVariable String leagueName) {
         List<Club> clubList = this.clubService.getAllClubsByAccordingToLeagueName(leagueName);
         List<ClubDto> clubDtosList = this.clubService.convertClubListToClubDtoList(clubList);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Successfull" , clubDtosList ));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Successfull" , clubDtosList ));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> createClub(@RequestBody CreateClubRequest createClubRequest) {
+    public ResponseEntity<ApiResponse<Void>> createClub(@RequestBody CreateClubRequest createClubRequest) {
 
          this.clubService.createClub(createClubRequest);
-         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Club created" , null ));
+         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Club created" , null ));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ApiResponse> updateClub(@RequestBody UpdateClubRequest updateClubRequest) {
+    public ResponseEntity<ApiResponse<Void>> updateClub(@RequestBody UpdateClubRequest updateClubRequest) {
 
         this.clubService.updateClub(updateClubRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Club updated" , null ));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Club updated" , null ));
     }
 
     @PutMapping("/change-league")
-    public ResponseEntity<ApiResponse> changeClubLeague(@RequestParam Long clubId , @RequestParam Long newLeagueId) {
+    public ResponseEntity<ApiResponse<Void>> changeClubLeague(@RequestParam Long clubId , @RequestParam Long newLeagueId) {
 
         this.clubService.changeClubLeague(clubId,newLeagueId);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Club's league changed" , null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Club's league changed" , null));
     }
 
     /* It causes some errors and should be deactivated until resolved

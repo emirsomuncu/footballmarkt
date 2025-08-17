@@ -8,7 +8,7 @@ import com.somuncu.footballmarkt.dao.UserRepository;
 import com.somuncu.footballmarkt.entities.Community;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.user.CreateUserRequest;
-import com.somuncu.footballmarkt.response.dtos.user.UserDto;
+import com.somuncu.footballmarkt.dtos.user.UserDto;
 import com.somuncu.footballmarkt.service.rules.UserServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

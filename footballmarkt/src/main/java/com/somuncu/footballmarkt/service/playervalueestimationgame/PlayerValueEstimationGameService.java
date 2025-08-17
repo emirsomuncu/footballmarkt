@@ -3,7 +3,7 @@ package com.somuncu.footballmarkt.service.playervalueestimationgame;
 import com.somuncu.footballmarkt.entities.PlayerValueEstimationGame;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.response.PlayPlayerValueEstimationGameResponse;
-import com.somuncu.footballmarkt.response.dtos.playervalueestimationgame.PlayerValueEstimationGameDto;
+import com.somuncu.footballmarkt.dtos.playervalueestimationgame.PlayerValueEstimationGameDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface PlayerValueEstimationGameService {

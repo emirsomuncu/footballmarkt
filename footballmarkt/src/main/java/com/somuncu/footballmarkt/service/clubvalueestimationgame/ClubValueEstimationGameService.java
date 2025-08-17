@@ -1,10 +1,9 @@
 package com.somuncu.footballmarkt.service.clubvalueestimationgame;
 
 import com.somuncu.footballmarkt.entities.ClubValueEstimationGame;
-import com.somuncu.footballmarkt.entities.PlayerValueEstimationGame;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.response.PlayClubValueEstimationGameResponse;
-import com.somuncu.footballmarkt.response.dtos.clubvalueestimationgame.ClubValueEstimationGameDto;
+import com.somuncu.footballmarkt.dtos.clubvalueestimationgame.ClubValueEstimationGameDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface ClubValueEstimationGameService {

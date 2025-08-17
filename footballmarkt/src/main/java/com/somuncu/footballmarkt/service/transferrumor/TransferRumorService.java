@@ -6,7 +6,7 @@ import com.somuncu.footballmarkt.request.transferrumor.CreateTransferRumorReques
 import com.somuncu.footballmarkt.request.transferrumor.UpdateTransferRumorRequest;
 import com.somuncu.footballmarkt.response.DetermineNumbersForPagingResponse;
 import com.somuncu.footballmarkt.response.PageResponse;
-import com.somuncu.footballmarkt.response.dtos.transferrumor.TransferRumorDto;
+import com.somuncu.footballmarkt.dtos.transferrumor.TransferRumorDto;
 
 import java.util.List;
 

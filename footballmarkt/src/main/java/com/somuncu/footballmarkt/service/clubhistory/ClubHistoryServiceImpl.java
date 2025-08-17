@@ -7,9 +7,7 @@ import com.somuncu.footballmarkt.dao.ClubHistoryRepository;
 import com.somuncu.footballmarkt.dao.ClubRepository;
 import com.somuncu.footballmarkt.entities.Club;
 import com.somuncu.footballmarkt.entities.ClubHistory;
-import com.somuncu.footballmarkt.response.dtos.clubhistory.ClubHistoryDto;
-import com.somuncu.footballmarkt.service.player.PlayerService;
-import com.somuncu.footballmarkt.service.player.PlayerServiceImpl;
+import com.somuncu.footballmarkt.dtos.clubhistory.ClubHistoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

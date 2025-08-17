@@ -14,7 +14,7 @@ import com.somuncu.footballmarkt.entities.Player;
 import com.somuncu.footballmarkt.entities.Trophy;
 import com.somuncu.footballmarkt.request.trophy.CreateTrophyRequest;
 import com.somuncu.footballmarkt.request.trophy.UpdateTrophyRequest;
-import com.somuncu.footballmarkt.response.dtos.trophy.TrophyDto;
+import com.somuncu.footballmarkt.dtos.trophy.TrophyDto;
 import com.somuncu.footballmarkt.service.rules.TrophyServiceImplRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

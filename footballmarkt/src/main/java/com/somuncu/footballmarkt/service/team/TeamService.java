@@ -3,10 +3,9 @@ package com.somuncu.footballmarkt.service.team;
 import com.somuncu.footballmarkt.entities.User;
 import com.somuncu.footballmarkt.request.team.CreateTeamRequest;
 import com.somuncu.footballmarkt.request.team.UpdateTeamRequest;
-import com.somuncu.footballmarkt.response.dtos.team.TeamDto;
+import com.somuncu.footballmarkt.dtos.team.TeamDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.xml.parsers.SAXParser;
 import java.util.List;
 
 public interface TeamService {

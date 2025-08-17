@@ -43,11 +43,11 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<ApiResponse<Void>> createUser(@RequestBody CreateUserRequest createUserRequest) {
 
         createUserRequest.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
         this.userService.createUser(createUserRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("User registered successfully" , null));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("User registered successfully" , null));
 
     }
 

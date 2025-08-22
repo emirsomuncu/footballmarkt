@@ -118,6 +118,12 @@ public class PlayersController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Player transferred the new club" , null));
     }
 
+    @GetMapping("/suggest-similar-players")
+    public ResponseEntity<ApiResponse<List<PlayerDto>>> suggestSimilarPlayers(@RequestParam Long playerId) {
+        List<PlayerDto> playerDtos = this.playerService.suggestSimilarPlayers(playerId);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Similar players listed" , playerDtos));
+    }
+
     /* It causes some errors and should be deactivated until resolved
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deletePlayer(@RequestParam Long playerId) {

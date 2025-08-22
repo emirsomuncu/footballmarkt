@@ -16,6 +16,21 @@ public class CreateStatsRequest {
     private Long playedMatch;
     private Long firstEleven;
     private Long playedMinutes;
+    private Long totalPass;
+    private Long completePass;
+    private Long keyPasses;
+    private Long totalShoot;
+    private Long shootOnTarget;
+    private Long duel;
+    private Long successfulDuel;
+    private Long airDuel;
+    private Long airDuelWon;
+    private Long totalDribbles;
+    private Long successfulDribbles;
+    private Long cleanSheets;
+    private Double savePercentage;
+    private Double goalExpectation;
+    private Double assistExpectation;
     private Long yellowCard;
     private Long redCard;
 

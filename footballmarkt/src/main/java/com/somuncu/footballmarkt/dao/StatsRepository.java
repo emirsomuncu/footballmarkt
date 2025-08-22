@@ -11,4 +11,5 @@ public interface StatsRepository extends JpaRepository<Stats , Long> {
     public List<Stats> findStatsByPlayerFirstNameAndPlayerLastName(String firstName , String lastName);
     public Stats findStatsByPlayerFirstNameAndPlayerLastNameAndSeason(String firstName , String lastName , String season);
     public Boolean existsBySeasonAndPlayer(String season , Player player);
+    public List<Stats> findAllBySeason(String season);
 }

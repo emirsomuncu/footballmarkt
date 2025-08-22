@@ -2,6 +2,7 @@ package com.somuncu.footballmarkt.service.player;
 
 import com.somuncu.footballmarkt.core.utiliites.exceptions.club.NoClubFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.player.NoPlayerFoundException;
+import com.somuncu.footballmarkt.core.utiliites.exceptions.stats.NoStatsFoundException;
 import com.somuncu.footballmarkt.core.utiliites.exceptions.trophy.NoTrophyFoundException;
 import com.somuncu.footballmarkt.core.utiliites.mappers.ModelMapperService;;
 import com.somuncu.footballmarkt.dao.*;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,7 @@ public class PlayerServiceImpl implements PlayerService{
     private ClubHistoryRepository clubHistoryRepository;
     private LeagueRepository leagueRepository;
     private TrophyRepository trophyRepository;
+    private StatsRepository statsRepository;
     private PlayerServiceImplRules playerServiceImplRules;
     private ModelMapperService modelMapperService ;
 
@@ -224,6 +227,125 @@ public class PlayerServiceImpl implements PlayerService{
         pageResponse.setLast(playerList.isLast());
 
         return pageResponse;
+    }
+
+    @Override
+    public List<PlayerDto> suggestSimilarPlayers(Long playerId) {
+
+        Player mainPlayer = this.playerRepository.findById(playerId).orElseThrow(()-> new NoPlayerFoundException("No player found to suggest similar players"));
+        String mainPlayerPosition = mainPlayer.getPosition();
+        List<Stats> mainPlayerStats = mainPlayer.getStats();
+        Stats lastSeasonsStatsOfMainPlayer = mainPlayerStats.stream()
+                .max(Comparator.comparingLong(Stats::getId)).orElseThrow(()-> new NoStatsFoundException("No stats found for this player to suggest similar players"));
+        String lastSeason = lastSeasonsStatsOfMainPlayer.getSeason();
+
+
+        if(mainPlayerPosition.equals("goalkeeper")) {
+
+            List<Player> players = this.playerRepository.findAllPlayersByPositionForSuggestingPlayers("goalkeeper");
+            long targetCleanSheets = lastSeasonsStatsOfMainPlayer.getCleanSheets();
+            double targetSavePercentage = lastSeasonsStatsOfMainPlayer.getSavePercentage();
+
+            List<Player> closestPlayers = players.stream()
+                    .filter(p -> p.getStatsForSeason(lastSeason) != null)
+                    .filter(p -> !p.getId().equals(mainPlayer.getId()))
+                    .sorted(Comparator.comparingDouble(p -> {
+                        Stats stats = p.getStatsForSeason(lastSeason);
+
+                        long csDiff = stats.getCleanSheets() - targetCleanSheets;
+                        double spDiff = stats.getSavePercentage() - targetSavePercentage;
+
+                        return csDiff * csDiff + spDiff * spDiff;
+                    }))
+                    .limit(3)
+                    .toList();
+
+            return closestPlayers.stream().map(player -> this.modelMapperService.forResponse().map(player , PlayerDto.class)).collect(Collectors.toList());
+        }
+        else if (mainPlayerPosition.equals("defender")) {
+
+            List<Player> players = this.playerRepository.findAllPlayersByPositionForSuggestingPlayers("defender");
+            double successfulDuelRate = lastSeasonsStatsOfMainPlayer.getSuccessfulDuelRate();
+            double passingAccuracyRate = lastSeasonsStatsOfMainPlayer.getPassingAccuracyRate();
+            double airDuelSuccessRate = lastSeasonsStatsOfMainPlayer.getAirDuelSuccessRate();
+            double yellowCard = lastSeasonsStatsOfMainPlayer.getYellowCard();
+
+            List<Player> closestPlayers = players.stream()
+                    .filter(p -> p.getStatsForSeason(lastSeason) != null)
+                    .filter(p -> !p.getId().equals(mainPlayer.getId()))
+                    .sorted(Comparator.comparingDouble(p -> {
+                        Stats stats = p.getStatsForSeason(lastSeason);
+
+                        double duelDiff   = stats.getSuccessfulDuelRate()   - successfulDuelRate;
+                        double passDiff   = stats.getPassingAccuracyRate()  - passingAccuracyRate;
+                        double airDiff    = stats.getAirDuelSuccessRate()   - airDuelSuccessRate;
+                        double yellowDiff = stats.getYellowCard()           - yellowCard;
+
+                        return duelDiff * duelDiff
+                                + passDiff * passDiff
+                                + airDiff * airDiff
+                                + yellowDiff * yellowDiff;
+                    }))
+                    .limit(3)
+                    .toList();
+            return closestPlayers.stream().map(player -> this.modelMapperService.forResponse().map(player , PlayerDto.class)).collect(Collectors.toList());
+        }
+        else if (mainPlayerPosition.equals("midfielder") || mainPlayerPosition.equals("forward")) {
+
+            List<Player> players = new ArrayList<>();
+            if (mainPlayerPosition.equals("midfielder")) {
+                players = this.playerRepository.findAllPlayersByPositionForSuggestingPlayers("midfielder");
+            } else {
+                players = this.playerRepository.findAllPlayersByPositionForSuggestingPlayers("forward");
+            }
+
+            double passingAccuracyRate = lastSeasonsStatsOfMainPlayer.getPassingAccuracyRate();
+            Long keyPass = lastSeasonsStatsOfMainPlayer.getKeyPasses();
+            double successfulDuelRate = lastSeasonsStatsOfMainPlayer.getSuccessfulDuelRate();
+            double successfulShootingRate = lastSeasonsStatsOfMainPlayer.getSuccessfulShootingRate();
+            double successfulDribblesRate = lastSeasonsStatsOfMainPlayer.getSuccessfulDribblesRate();
+            double dribblesPerMatch = lastSeasonsStatsOfMainPlayer.getDribblesPerMatch();
+            double goalExpectation = lastSeasonsStatsOfMainPlayer.getGoalExpectation();
+            double assistExpectation = lastSeasonsStatsOfMainPlayer.getAssistExpectation();
+            long goal = lastSeasonsStatsOfMainPlayer.getGoal();
+            long assist = lastSeasonsStatsOfMainPlayer.getAssist();
+            long playedMatch = lastSeasonsStatsOfMainPlayer.getPlayedMatch();
+
+            List<Player> closestPlayers = players.stream()
+                    .filter(p -> p.getStatsForSeason(lastSeason) != null)
+                    .filter(p -> !p.getId().equals(mainPlayer.getId()))
+                    .sorted(Comparator.comparingDouble(p -> {
+                        Stats stats = p.getStatsForSeason(lastSeason);
+
+                        double passDiff        = stats.getPassingAccuracyRate()   - passingAccuracyRate;
+                        Long   keyPassDiff     = stats.getKeyPasses()             - keyPass;
+                        double shootDiff       = stats.getSuccessfulShootingRate()- successfulShootingRate;
+                        double duelDiff        = stats.getSuccessfulDuelRate()    - successfulDuelRate;
+                        double dribbleDiff     = stats.getSuccessfulDribblesRate()- successfulDribblesRate;
+                        double dribblePMDiff   = stats.getDribblesPerMatch()      - dribblesPerMatch;
+                        double goalExpDiff     = stats.getGoalExpectation()       - goalExpectation;
+                        double assistExpDiff   = stats.getAssistExpectation()     - assistExpectation;
+                        long goalDiff          = stats.getGoal()                  - goal;
+                        long assistDiff        = stats.getAssist()                - assist;
+                        long playedMatchDiff   = stats.getPlayedMatch()           - playedMatch;
+
+                        return passDiff      * passDiff
+                                + keyPassDiff   * keyPassDiff
+                                + shootDiff     * shootDiff
+                                + duelDiff      * duelDiff
+                                + dribbleDiff   * dribbleDiff
+                                + dribblePMDiff * dribblePMDiff
+                                + goalExpDiff   * goalExpDiff
+                                + assistExpDiff * assistExpDiff
+                                + goalDiff      * goalDiff
+                                + assistDiff    * assistDiff
+                                + playedMatchDiff * playedMatchDiff ;
+                    }))
+                    .limit(2)
+                    .toList();
+            return closestPlayers.stream().map(player -> this.modelMapperService.forResponse().map(player , PlayerDto.class)).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Transactional

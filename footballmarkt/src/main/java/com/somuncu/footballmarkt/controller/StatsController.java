@@ -6,6 +6,7 @@ import com.somuncu.footballmarkt.request.stats.CreateStatsRequest;
 import com.somuncu.footballmarkt.request.stats.UpdateStatsRequest;
 import com.somuncu.footballmarkt.response.ApiResponse;
 import com.somuncu.footballmarkt.service.stats.StatsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

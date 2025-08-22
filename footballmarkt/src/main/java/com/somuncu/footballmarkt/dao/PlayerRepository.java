@@ -30,6 +30,9 @@ public interface PlayerRepository extends JpaRepository<Player , Long> {
     public List<Player> findPlayerByClubName(String name);
     public Page<Player> findPlayerByNation(String nation , Pageable pageable);
     public Page<Player> findPlayerByPosition(String position , Pageable pageable);
+
+    @Query("SELECT p FROM Player p WHERE p.position = :position")
+    public List<Player> findAllPlayersByPositionForSuggestingPlayers(String position);
     public List<Player> findPlayerByClubNameAndPosition(String clubName , String position);
     public Page<Player> findAllByOrderByMarketValueDesc(Pageable pageable);
     public Page<Player> findAllByClubNameOrderByMarketValueDesc(String clubName , Pageable pageable);

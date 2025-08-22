@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -84,6 +85,13 @@ public class Player implements Serializable {
     public void updateArenaWins() {
         Long size = Long.valueOf(arenaGamesAsWinnerPlayer.size());
         this.arenaWins = size;
+    }
+
+    public Stats getStatsForSeason(String season) {
+        return stats.stream()
+                .filter(s -> Objects.equals(s.getSeason(), season))
+                .findFirst()
+                .orElse(null);
     }
 
     public Player(Long id, String firstName, String lastName, String nation, int age, String foot, Double marketValue) {

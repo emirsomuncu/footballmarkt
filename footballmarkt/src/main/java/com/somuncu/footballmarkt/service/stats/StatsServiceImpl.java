@@ -47,6 +47,13 @@ public class StatsServiceImpl implements StatsService {
 
         Stats stats = this.modelMapperService.forRequest().map(createStatsRequest , Stats.class);
         this.statsServiceImplRules.checkIfStatsExist(stats , stats.getPlayer());
+        stats.evaluatePassingAccuracyRate();
+        stats.evaluateSuccessfulShootingRate();
+        stats.evaluateSuccessfulDuelRate();
+        stats.evaluateSuccessfulDribblesRate();
+        stats.evaluateDribblesPerMatch();
+        stats.evaluateAirDuelSuccessRate();
+
         this.statsRepository.save(stats);
     }
 
@@ -54,6 +61,12 @@ public class StatsServiceImpl implements StatsService {
     public void updateStats(UpdateStatsRequest updateStatsRequest) {
 
         Stats stats = this.modelMapperService.forRequest().map(updateStatsRequest , Stats.class);
+        stats.evaluatePassingAccuracyRate();
+        stats.evaluateSuccessfulShootingRate();
+        stats.evaluateSuccessfulDuelRate();
+        stats.evaluateSuccessfulDribblesRate();
+        stats.evaluateDribblesPerMatch();
+        stats.evaluateAirDuelSuccessRate();
         this.statsRepository.save(stats);
     }
 

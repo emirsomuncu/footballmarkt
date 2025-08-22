@@ -21,6 +21,7 @@ public interface PlayerService {
     public List<Player> listPlayersAccordingToClubAndPosition(String clubName , String position);
     public PageResponse<PlayerDto> listAllPlayersAccordingToDescendingMarketValue(int pagingOffset);
     public PageResponse<PlayerDto> listAllPlayersOfClubAccordingToDescendingMarketValue(String clubName , int pagingOffset);
+    public List<PlayerDto> suggestSimilarPlayers(Long playerId);
     public void addPlayer(AddPlayerRequest addPlayerRequest);
     public void updatePlayer(UpdatePlayerRequest updatePlayerRequest);
     public void transferPlayer(Long playerId , Long newClubId);
